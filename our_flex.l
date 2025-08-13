@@ -14,22 +14,20 @@
 letra [a-zA-Z]      
 digito [0-9]   
 bool (true|false)
-tipo (bool|int)
-or (\|\|)
-and (&&)
-not (~)
+tipo (bool|int|void)
 
 
 %%
 {digito}+                     { printf("INT: %d\n", atoi(yytext)); return INT; }
 {bool}                        { printf("BOOL: %s\n", yytext); return BOOL; }
-{or}                          { printf("OR: %s\n", yytext); return OR; }
-{and}                         { printf("AND: %s\n", yytext); return AND; }
-{not}                         { printf("NOT: %s\n", yytext); return NOT; }
+"return"                      { printf("RETURN: %s\n", yytext); return RETURN; }
+"||"                          { printf("OR: %s\n", yytext); return OR; }
+"&&"                          { printf("AND: %s\n", yytext); return AND; }
+"~"                           { printf("NOT: %s\n", yytext); return NOT; }
 {tipo}                        { printf("TIPO: %s\n", yytext); return TIPO; }
 {letra}({letra}|{digito})*    { printf("ID: %s\n",yytext); return ID; }
 "-"                           { printf("%s\n", yytext); return TMENOS; }    
-[+*;()=]                      { printf("%s\n", yytext); return *yytext; }
+[+*;()={}]                      { printf("%s\n", yytext); return *yytext; }
 .|\n                          ; /* ignore all the rest */
 %%
 

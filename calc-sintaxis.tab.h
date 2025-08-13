@@ -56,12 +56,14 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     INT = 258,                     /* INT  */
     BOOL = 259,                    /* BOOL  */
-    ID = 260,                      /* ID  */
-    TIPO = 261,                    /* TIPO  */
-    TMENOS = 262,                  /* TMENOS  */
-    OR = 263,                      /* OR  */
-    AND = 264,                     /* AND  */
-    NOT = 265                      /* NOT  */
+    VOID = 260,                    /* VOID  */
+    ID = 261,                      /* ID  */
+    TIPO = 262,                    /* TIPO  */
+    TMENOS = 263,                  /* TMENOS  */
+    RETURN = 264,                  /* RETURN  */
+    OR = 265,                      /* OR  */
+    AND = 266,                     /* AND  */
+    NOT = 267                      /* NOT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
