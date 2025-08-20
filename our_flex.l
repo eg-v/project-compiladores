@@ -3,8 +3,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include "ast.h"
 
 #include "calc-sintaxis.tab.h"
+
+extern AST *root;
+void print_ast(AST *n, int indent, int is_last);
 
 %}
 
@@ -18,16 +22,15 @@ tipo (bool|int|void)
 
 
 %%
-{digito}+                     { printf("INT: %d\n", atoi(yytext)); return INT; }
-{bool}                        { printf("BOOL: %s\n", yytext); return BOOL; }
-"return"                      { printf("RETURN: %s\n", yytext); return RETURN; }
-"||"                          { printf("OR: %s\n", yytext); return OR; }
-"&&"                          { printf("AND: %s\n", yytext); return AND; }
-"~"                           { printf("NOT: %s\n", yytext); return NOT; }
-{tipo}                        { printf("TIPO: %s\n", yytext); return TIPO; }
-{letra}({letra}|{digito})*    { printf("ID: %s\n",yytext); return ID; }
-"-"                           { printf("%s\n", yytext); return TMENOS; }    
-[+*;()={}]                      { printf("%s\n", yytext); return *yytext; }
+{digito}+                     { yylval.ival = atoi(yytext); return INT; }
+{bool}                        { yylval.sval = strdup(yytext); return BOOL; }
+"return"                      { return RETURN; }
+"||"                          { return OR; }
+"&&"                          { return AND; }
+"~"                           { return NOT; }
+{tipo}                        { yylval.sval = strdup(yytext); return TIPO; }
+{letra}({letra}|{digito})*    { yylval.sval = strdup(yytext); return ID; }
+[+*-;()={}]                    { return *yytext; }
 .|\n                          ; /* ignore all the rest */
 %%
 
@@ -42,6 +45,9 @@ int main(int argc,char *argv[]){
 	else
 		yyin = stdin;
 
-	yyparse();
+        if (yyparse() == 0) {
+            print_ast(root, 0, 1);
+        }
+        return 0;
 
 }

@@ -56,21 +56,31 @@ extern int yydebug;
     YYUNDEF = 257,                 /* "invalid token"  */
     INT = 258,                     /* INT  */
     BOOL = 259,                    /* BOOL  */
-    VOID = 260,                    /* VOID  */
-    ID = 261,                      /* ID  */
-    TIPO = 262,                    /* TIPO  */
-    TMENOS = 263,                  /* TMENOS  */
-    RETURN = 264,                  /* RETURN  */
-    OR = 265,                      /* OR  */
-    AND = 266,                     /* AND  */
-    NOT = 267                      /* NOT  */
+    ID = 260,                      /* ID  */
+    TIPO = 261,                    /* TIPO  */
+    RETURN = 262,                  /* RETURN  */
+    OR = 263,                      /* OR  */
+    AND = 264,                     /* AND  */
+    NOT = 265,                     /* NOT  */
+    TMENOS = 266                   /* TMENOS  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+union YYSTYPE
+{
+#line 11 "calc-sintaxis.y"
+
+    int ival;
+    char *sval;
+    struct AST *ast;
+
+#line 81 "calc-sintaxis.tab.h"
+
+};
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif
