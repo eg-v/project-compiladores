@@ -61,8 +61,7 @@ extern int yydebug;
     RETURN = 262,                  /* RETURN  */
     OR = 263,                      /* OR  */
     AND = 264,                     /* AND  */
-    NOT = 265,                     /* NOT  */
-    TMENOS = 266                   /* TMENOS  */
+    NOT = 265                      /* NOT  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -71,13 +70,13 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 11 "calc-sintaxis.y"
+#line 10 "calc-sintaxis.y"
 
     int ival;
     char *sval;
     struct AST *ast;
 
-#line 81 "calc-sintaxis.tab.h"
+#line 80 "calc-sintaxis.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;

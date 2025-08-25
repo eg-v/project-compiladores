@@ -15,24 +15,29 @@ typedef enum {
     NODE_PROG
 } NodeType;
 
+typedef enum {
+    TYPE_INT,
+    TYPE_BOOL,
+    TYPE_VOID,
+    TYPE_UNKNOWN,
+    TYPE_ERROR
+} TypeInfo;
+
 typedef struct AST {
     NodeType type;
     char* name;
     int ival;
     char* bval;
     char op;
+    TypeInfo eval_type;
     struct AST *left;
     struct AST *right;
     struct AST *extra;
     struct AST *next;
 } AST;
 
-AST *new_node(NodeType type, AST *left, AST *right);
-AST *new_int(int val);
-AST *new_bool(char *val);
-AST *new_id(char *name);
-AST *new_binop(char op, AST *l, AST *r);
-AST *new_unop(char op, AST *expr);
+AST *make_node(NodeType type, char *name, int ival, char *bval,
+               char op, AST *left, AST *right);
 
 void print_ast(AST *n, int depth, int is_last);
 
