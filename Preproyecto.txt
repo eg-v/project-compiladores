@@ -1,0 +1,88 @@
+1. Extender la siguiente gramatica de expresiones con declaracion de variables, asignaciones y uso de
+variables. Considere que las variables pueden ser de tipo entero (int) o logico (bool). Ademas, extienda
+la gramatica para permitir valores constantes logicos.
+
+PROGRAMA -> FUNCION
+
+FUNCION -> TIPO "main" "(" ")" "{" SENTENCIAS "}"
+
+TIPO -> "bool" 
+      | "int" 
+      | "void"
+
+SENTENCIAS -> (SENTENCIA)*
+SENTENCIA -> DECLARACIÓN ";"
+           | ASIGNACION ";"
+           | RETURN ";"
+
+DECLARACIÓN -> TIPO IDENTIFICADOR
+ASIGNACION -> IDENTIFICADOR "=" EXPRESION
+RETURN -> "return" EXPRESION
+        | "return"
+        | /* vacio */
+
+EXPRESION -> EXPRESION + TERMINO
+           | EXPRESION * TERMINO
+           | "(" EXPRESION ")"
+           | VALOR
+           | IDENTIFICADOR
+           | TERMINO
+
+TERMINO -> VALOR
+          | IDENTIFICADOR
+          | "(" EXPRESION ")"
+
+VALOR -> BOOLEANO | ENTERO
+
+BOOL -> "true" 
+      | "false"
+
+ENTERO -> "-"?[0-9]+
+
+IDENTIFICADOR -> [a-zA-Z]([a-zA-Z0-9])*
+
+2. De expresiones regulares que definan la estructura de las palabras reservadas, variables, los valores
+constantes, operadores y delimitadores del lenguaje del punto anterior.
+
+Expresiones regulares (regex) que definan los tokens léxicos del lenguaje (palabras 
+reservadas, variables, constantes, operadores, delimitadores):
+
+Palabras reservadas:
+int\b
+bool\b
+void\b
+return\b
+main\b
+true\b
+false\b
+
+\b asegura que termine la palabra
+
+Identificadores (variables):
+[a-zA-Z][a-zA-Z0-9]*
+
+Constantes:
+      Enteros:
+      -?[0-9]+
+      Booleanos:
+      true|false
+
+Operadores:
+      Aritméticos:
+      \+|\*|-
+      Asignación:
+      =
+
+Delimitadores:
+      Punto y coma:
+      ;
+      Parentesis:
+      \(|\)
+      Llaves:
+      \{|\}
+
+Espacios en blanco y comentarios:
+      Espacios y tabs:
+      [ \t\r\n]+
+      Comentarios estilo // ... o /* ... */:
+      //.*|/\*([^*]|\*+[^*/])*\*+/
