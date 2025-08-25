@@ -1,0 +1,9 @@
+int main(){
+bool x = 5;
+bool y;
+int 5 = true;
+int b = 5;
+y = 5 * b;
+return 0;
+
+}

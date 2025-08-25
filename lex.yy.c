@@ -1,5 +1,5 @@
 
-#line 2 "lex.yy.c"
+#line 3 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -490,19 +490,15 @@ int yy_flex_debug = 0;
 char *yytext;
 #line 1 "our_flex.l"
 #line 2 "our_flex.l"
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "ast.h"
-
 #include "calc-sintaxis.tab.h"
 
 extern AST *root;
-void print_ast(AST *n, int indent, int is_last);
-
-#line 504 "lex.yy.c"
-#line 505 "lex.yy.c"
+#line 501 "lex.yy.c"
+#line 502 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -719,9 +715,9 @@ YY_DECL
 		}
 
 	{
-#line 24 "our_flex.l"
+#line 21 "our_flex.l"
 
-#line 724 "lex.yy.c"
+#line 721 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -790,61 +786,61 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 25 "our_flex.l"
+#line 22 "our_flex.l"
 { yylval.ival = atoi(yytext); return INT; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 26 "our_flex.l"
+#line 23 "our_flex.l"
 { yylval.sval = strdup(yytext); return BOOL; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 27 "our_flex.l"
+#line 24 "our_flex.l"
 { return RETURN; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 28 "our_flex.l"
+#line 25 "our_flex.l"
 { return OR; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 29 "our_flex.l"
+#line 26 "our_flex.l"
 { return AND; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 30 "our_flex.l"
+#line 27 "our_flex.l"
 { return NOT; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 31 "our_flex.l"
+#line 28 "our_flex.l"
 { yylval.sval = strdup(yytext); return TIPO; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 32 "our_flex.l"
+#line 29 "our_flex.l"
 { yylval.sval = strdup(yytext); return ID; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 33 "our_flex.l"
+#line 30 "our_flex.l"
 { return *yytext; }
 	YY_BREAK
 case 10:
 /* rule 10 can match eol */
 YY_RULE_SETUP
-#line 34 "our_flex.l"
+#line 31 "our_flex.l"
 ; /* ignore all the rest */
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 35 "our_flex.l"
+#line 32 "our_flex.l"
 ECHO;
 	YY_BREAK
-#line 847 "lex.yy.c"
+#line 844 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1861,24 +1857,22 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 35 "our_flex.l"
+#line 32 "our_flex.l"
 
 
-void yyerror() {
-	printf("%s%d\n","-> ERROR Sintactico en la linea: ",yylineno);
+#include <stdio.h>
+#include "ast.h"
+
+extern int yyparse(void);
+extern AST *root;
+
+int main() {
+    if (yyparse() == 0) {
+        printf("\nÁrbol sintáctico con tipos:\n");
+        print_ast(root, 0, 1);
+    }
+    return 0;
 }
 
-int main(int argc,char *argv[]){
-	++argv,--argc;
-	if (argc > 0)
-		yyin = fopen(argv[0],"r");
-	else
-		yyin = stdin;
 
-        if (yyparse() == 0) {
-            print_ast(root, 0, 1);
-        }
-        return 0;
-
-}
 

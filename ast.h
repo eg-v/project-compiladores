@@ -2,37 +2,33 @@
 #define AST_H
 
 typedef enum {
-    NODE_INT,
-    NODE_BOOL,
-    NODE_ID,
-    NODE_BINOP,
-    NODE_UNOP,
-    NODE_DECL,
-    NODE_ASSIGN,
-    NODE_RETURN,
-    NODE_FUNCTION,
-    NODE_BLOCK,
-    NODE_PROG
-} NodeType;
+    TYPE_INT,
+    TYPE_BOOL,
+    TYPE_ID,
+    TYPE_OP,
+} DataType;
+
+typedef struct {
+    DataType dtype;
+    char *name;
+    int ival;      
+    int bval;      
+    char op;       
+} Info;
 
 typedef struct AST {
-    NodeType type;
-    char* name;
-    int ival;
-    char* bval;
-    char op;
+    Info info;
     struct AST *left;
     struct AST *right;
-    struct AST *extra;
     struct AST *next;
 } AST;
 
-AST *new_node(NodeType type, AST *left, AST *right);
 AST *new_int(int val);
-AST *new_bool(char *val);
+AST *new_bool(int val);
 AST *new_id(char *name);
-AST *new_binop(char op, AST *l, AST *r);
-AST *new_unop(char op, AST *expr);
+AST *new_op(char op, AST *l, AST *r);
+
+int check_types(AST *node);
 
 void print_ast(AST *n, int depth, int is_last);
 

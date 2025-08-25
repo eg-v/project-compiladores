@@ -1,16 +1,13 @@
 %{
-
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "ast.h"
-
 #include "calc-sintaxis.tab.h"
 
 extern AST *root;
-void print_ast(AST *n, int indent, int is_last);
-
 %}
+
 
 %option noyywrap
 %option yylineno
@@ -34,20 +31,18 @@ tipo (bool|int|void)
 .|\n                          ; /* ignore all the rest */
 %%
 
-void yyerror() {
-	printf("%s%d\n","-> ERROR Sintactico en la linea: ",yylineno);
+#include <stdio.h>
+#include "ast.h"
+
+extern int yyparse(void);
+extern AST *root;
+
+int main() {
+    if (yyparse() == 0) {
+        printf("\nÁrbol sintáctico con tipos:\n");
+        print_ast(root, 0, 1);
+    }
+    return 0;
 }
 
-int main(int argc,char *argv[]){
-	++argv,--argc;
-	if (argc > 0)
-		yyin = fopen(argv[0],"r");
-	else
-		yyin = stdin;
 
-        if (yyparse() == 0) {
-            print_ast(root, 0, 1);
-        }
-        return 0;
-
-}
