@@ -73,15 +73,6 @@ decl:
           $$ = make_node(NODE_DECL, $2, 0, NULL, 0, NULL, NULL);
           $$->info->eval_type = t;   /* store declared type */
       }
-    | TIPO ID '=' expr {
-          TypeInfo t;
-          if (strcmp($1, "int") == 0) t = TYPE_INT;
-          else if (strcmp($1, "bool") == 0) t = TYPE_BOOL;
-          else t = TYPE_UNKNOWN;
-
-          $$ = make_node(NODE_DECL, $2, 0, NULL, 0, $4, NULL);
-          $$->info->eval_type = t;   /* store declared type */
-      }
     | ID '=' expr {
         AST *id_node = make_node(NODE_ID, $1, 0, NULL, 0, NULL, NULL);
         $$ = make_node(NODE_ASSIGN, NULL, 0, NULL, 0, id_node, $3);

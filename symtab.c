@@ -29,17 +29,59 @@ TypeInfo symtab_lookup(SymTab *st, const char *name) {
     return TYPE_ERROR;
 }
 
+TypeInfo symtab_scope(SymTab *st, const char *name) {
+    SymTab *scope = st;
+    for (Symbol *s = scope->head; s != NULL; s = s->next) {
+        if (strcmp(s->info->name, name) == 0) {
+            return s->info->eval_type;
+        }
+    }
+    return TYPE_ERROR;
+}
+
 void symtab_print(SymTab *st) {
     printf("=== Symbol Table ===\n");
     int scope_level = 0;
     for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
         printf("Scope level %d:\n", scope_level++);
         for (Symbol *s = scope->head; s != NULL; s = s->next) {
-            printf("  Name: %s, Type: %d\n", 
+            printf("  Name: %s, Type: %d, value: %d\n", 
                    s->info->name ? s->info->name : "(null)",
-                   s->info->eval_type);
+                   s->info->eval_type,
+                   s->info->ival);
         }
     }
     printf("====================\n");
 }
 
+int symtab_get_value(SymTab *st, const char *name, int *found) {
+    for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
+        for (Symbol *s = scope->head; s != NULL; s = s->next) {
+            if (strcmp(s->info->name, name) == 0) {
+                // if (!s->info->initialized) {
+                //     fprintf(stderr, "Warning: variable '%s' used before initialization\n", name);
+                //     *found = 0;
+                //     return 0;
+                // }
+                *found = 1;
+                return s->info->ival;
+            }
+        }
+    }
+    *found = 0;
+    return 0;
+}
+
+
+void symtab_set_value(SymTab *st, const char *name, int value) {
+    for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
+        for (Symbol *s = scope->head; s != NULL; s = s->next) {
+            if (strcmp(s->info->name, name) == 0) {
+                s->info->ival = value;
+                // s->info->initialized = true;
+                return;
+            }
+        }
+    }
+    fprintf(stderr, "Error: assignment to undeclared variable '%s'\n", name);
+}

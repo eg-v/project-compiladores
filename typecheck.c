@@ -24,11 +24,18 @@ TypeInfo check_types(AST* n, SymTab *st) {
             if (t == TYPE_ERROR) {
                 fprintf(stderr, "Error: undeclared variable '%s'\n", n->info->name);
                 t = TYPE_UNKNOWN;
+            } else {
+                int found;
+                int value = symtab_get_value(st, n->info->name, &found);
+                if (found) {
+                    n->info->ival = value;
+                }
             }
             n->info->eval_type = t;
             result = t;
             break;
         }
+
 
         case NODE_BINOP: {
             TypeInfo lt = check_types(n->left, st);
@@ -61,18 +68,36 @@ TypeInfo check_types(AST* n, SymTab *st) {
             TypeInfo rhs = check_types(n->right, st);
             if (lhs != rhs)
                 fprintf(stderr,"Type error: assignment mismatch\n");
+
+            // Set the value of the variable if right side is evaluable
+            if (n->left && n->left->type == NODE_ID) {
+                symtab_set_value(st, n->left->info->name, n->right->info->ival);
+            }
+
             n->info->eval_type = lhs;
             result = lhs;
             break;
         }
 
-        case NODE_DECL:
-              if (n->info->name) {
-                  symtab_insert(st, n->info);
-              }
-              if (n->right) check_types(n->right, st);
-              result = TYPE_UNKNOWN;
-              break;
+          case NODE_DECL:
+            if (n->info->name) {
+                TypeInfo t = symtab_scope(st, n->info->name);
+                if (t == TYPE_ERROR) {
+                    symtab_insert(st, n->info);
+                    if (n->right) {
+                        printf("TEST\n");
+                        check_types(n->right, st);
+                        if (n->right->type == NODE_INT || n->right->type == NODE_BOOL || n->right->type == NODE_ID) {
+                            n->info->ival = n->right->info->ival;
+                            symtab_set_value(st, n->info->name, n->info->ival);
+                        }
+                    }
+                } else {
+                    printf("%s: variable already declared.\n", n->info->name);
+                }
+            }
+            result = TYPE_UNKNOWN;
+            break;
 
         case NODE_RETURN:
             result = check_types(n->left, st);

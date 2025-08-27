@@ -33,7 +33,7 @@ void print_ast(AST *node, int depth, int is_last) {
         case NODE_BINOP:  printf("BINOP(%c)\n", node->info->op); break;
         case NODE_UNOP:   printf("UNOP(%c)\n", node->info->op); break;
         case NODE_DECL:   printf("DECL(%s)\n", node->info->name); break;
-        case NODE_ASSIGN: printf("ASSIGN(%s)\n", node->info->name); break;
+        case NODE_ASSIGN: printf("ASSIGN\n"); break;
         case NODE_RETURN: printf("RETURN\n"); break;
         case NODE_FUNCTION: printf("FUNCTION(%s)\n", node->info->name); break;
         case NODE_BLOCK:  printf("BLOCK\n"); break;
