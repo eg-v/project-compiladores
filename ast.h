@@ -23,13 +23,17 @@ typedef enum {
     TYPE_ERROR
 } TypeInfo;
 
-typedef struct AST {
-    NodeType type;
+typedef struct Info {
     char* name;
     int ival;
     char* bval;
     char op;
     TypeInfo eval_type;
+} Info;
+
+typedef struct AST {
+    NodeType type;
+    struct Info *info;
     struct AST *left;
     struct AST *right;
     struct AST *extra;

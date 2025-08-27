@@ -71,7 +71,7 @@ decl:
           else t = TYPE_UNKNOWN;
 
           $$ = make_node(NODE_DECL, $2, 0, NULL, 0, NULL, NULL);
-          $$->eval_type = t;   /* store declared type */
+          $$->info->eval_type = t;   /* store declared type */
       }
     | TIPO ID '=' expr {
           TypeInfo t;
@@ -80,7 +80,7 @@ decl:
           else t = TYPE_UNKNOWN;
 
           $$ = make_node(NODE_DECL, $2, 0, NULL, 0, $4, NULL);
-          $$->eval_type = t;   /* store declared type */
+          $$->info->eval_type = t;   /* store declared type */
       }
     | ID '=' expr {
         AST *id_node = make_node(NODE_ID, $1, 0, NULL, 0, NULL, NULL);

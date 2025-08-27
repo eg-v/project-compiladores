@@ -7,11 +7,12 @@ AST *make_node(NodeType type, char *name, int ival, char *bval,
                char op, AST *left, AST *right) {
     AST *n = malloc(sizeof(AST));
     n->type = type;
-    n->name = name ? strdup(name) : NULL;
-    n->ival = ival;
-    n->bval = bval ? strdup(bval) : NULL;
-    n->op = op;
-    n->eval_type = TYPE_UNKNOWN;
+    n->info = malloc(sizeof(Info));
+    n->info->name = name ? strdup(name) : NULL;
+    n->info->ival = ival;
+    n->info->bval = bval ? strdup(bval) : NULL;
+    n->info->op = op;
+    n->info->eval_type = TYPE_UNKNOWN;
     n->left = left;
     n->right = right;
     n->extra = NULL;
@@ -26,15 +27,15 @@ void print_ast(AST *node, int depth, int is_last) {
     if (depth > 0) printf(is_last ? "└── " : "├── ");
 
     switch (node->type) {
-        case NODE_INT:    printf("INT(%d)\n", node->ival); break;
-        case NODE_BOOL:   printf("BOOL(%s)\n", node->bval); break;
-        case NODE_ID:     printf("ID(%s)\n", node->name); break;
-        case NODE_BINOP:  printf("BINOP(%c)\n", node->op); break;
-        case NODE_UNOP:   printf("UNOP(%c)\n", node->op); break;
-        case NODE_DECL:   printf("DECL(%s)\n", node->name); break;
-        case NODE_ASSIGN: printf("ASSIGN(%s)\n", node->name); break;
+        case NODE_INT:    printf("INT(%d)\n", node->info->ival); break;
+        case NODE_BOOL:   printf("BOOL(%s)\n", node->info->bval); break;
+        case NODE_ID:     printf("ID(%s)\n", node->info->name); break;
+        case NODE_BINOP:  printf("BINOP(%c)\n", node->info->op); break;
+        case NODE_UNOP:   printf("UNOP(%c)\n", node->info->op); break;
+        case NODE_DECL:   printf("DECL(%s)\n", node->info->name); break;
+        case NODE_ASSIGN: printf("ASSIGN(%s)\n", node->info->name); break;
         case NODE_RETURN: printf("RETURN\n"); break;
-        case NODE_FUNCTION: printf("FUNCTION(%s)\n", node->name); break;
+        case NODE_FUNCTION: printf("FUNCTION(%s)\n", node->info->name); break;
         case NODE_BLOCK:  printf("BLOCK\n"); break;
         default:          printf("NODE(%d)\n", node->type);
     }

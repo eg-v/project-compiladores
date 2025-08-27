@@ -1177,7 +1177,7 @@ yyreduce:
           else t = TYPE_UNKNOWN;
 
           (yyval.ast) = make_node(NODE_DECL, (yyvsp[0].sval), 0, NULL, 0, NULL, NULL);
-          (yyval.ast)->eval_type = t;   /* store declared type */
+          (yyval.ast)->info->eval_type = t;   /* store declared type */
       }
 #line 1183 "calc-sintaxis.tab.c"
     break;
@@ -1191,7 +1191,7 @@ yyreduce:
           else t = TYPE_UNKNOWN;
 
           (yyval.ast) = make_node(NODE_DECL, (yyvsp[-2].sval), 0, NULL, 0, (yyvsp[0].ast), NULL);
-          (yyval.ast)->eval_type = t;   /* store declared type */
+          (yyval.ast)->info->eval_type = t;   /* store declared type */
       }
 #line 1197 "calc-sintaxis.tab.c"
     break;
