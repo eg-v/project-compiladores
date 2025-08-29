@@ -1,0 +1,7 @@
+// La multiplicación no es válida para tipos 'bool'.
+int main() {
+    bool a = true;
+    bool b = false;
+    int resultado = a * b; // Error: operación inválida para los tipos.
+    return 0;
+}
