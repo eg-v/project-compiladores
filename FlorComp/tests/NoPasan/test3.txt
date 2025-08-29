@@ -1,0 +1,6 @@
+// Se usa la variable 'y' sin una declaración previa.
+int main() {
+  int x = 10;
+  x = x + y; // Error: 'y' no está declarada.
+  return x;
+}

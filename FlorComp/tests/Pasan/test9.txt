@@ -1,0 +1,11 @@
+// Este programa prueba el manejo de comentarios.
+/*
+  Todo lo que está aquí adentro
+  debería ser ignorado por completo.
+*/
+int main() {
+    // Declaración de variable
+    int x = 10; /* Asignación inicial */
+    // La siguiente línea retorna el valor.
+    return x; // Fin del programa.
+}
