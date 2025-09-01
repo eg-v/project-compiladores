@@ -103,14 +103,6 @@ TypeInfo check_types(AST* n, SymTab *st) {
             result = check_types(n->left, st);
             break;
 
-        case NODE_BLOCK: {
-            SymTab *inner = symtab_new();
-            inner->parent = st;
-            check_types(n->left, inner);
-            symtab_print(inner);
-            break;
-        }
-
          case NODE_FUNCTION: {
             check_types(n->left, st);
             break;
@@ -120,7 +112,6 @@ TypeInfo check_types(AST* n, SymTab *st) {
             result = TYPE_UNKNOWN;
     }
 
-    if (n->extra) check_types(n->extra, st);
     if (n->next) check_types(n->next, st);
 
     return result;

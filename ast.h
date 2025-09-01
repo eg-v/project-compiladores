@@ -11,7 +11,6 @@ typedef enum {
     NODE_ASSIGN,
     NODE_RETURN,
     NODE_FUNCTION,
-    NODE_BLOCK,
     NODE_PROG
 } NodeType;
 
@@ -36,7 +35,6 @@ typedef struct AST {
     struct Info *info;
     struct AST *left;
     struct AST *right;
-    struct AST *extra;
     struct AST *next;
 } AST;
 

@@ -5,6 +5,8 @@
 #include "ast.h"
 
 AST *root = NULL;
+void yyerror(const char *s);
+int yylex(void);
 %}
 
 %union {
@@ -18,9 +20,10 @@ AST *root = NULL;
 %token <sval> ID
 %token <sval> TIPO
 %token RETURN
+%token MAIN
 %token OR AND NOT
 
-%type <ast> prog stmt expr VALOR decl block function_def
+%type <ast> prog stmt expr valor decl def_main
 
 %left OR
 %left AND
@@ -49,18 +52,14 @@ stmt:
       expr ';'                  { $$ = $1; }
     | decl ';'                  { $$ = $1; }
     | RETURN expr ';'           { $$ = make_node(NODE_RETURN, NULL, 0, NULL, 0, $2, NULL); }
-    | function_def              { $$ = $1; }
+    | def_main              { $$ = $1; }
     ;
 
-block:
-    '{' prog '}'                { $$ = make_node(NODE_BLOCK, NULL, 0, NULL, 0, $2, NULL); }
-    ;
-
-function_def:
-    TIPO ID '(' ')' block       {
-                                    AST *fn = make_node(NODE_FUNCTION, $2, 0, NULL, 0, $5, NULL);
-                                    $$ = fn;
-                                }
+def_main:
+    TIPO MAIN '(' ')' '{' prog '}'    {
+                                        AST *fn = make_node(NODE_FUNCTION, "main", 0, NULL, 0, $6, NULL);
+                                        $$ = fn;
+                                    }
     ;
 
 decl:
@@ -80,7 +79,7 @@ decl:
     ;
   
 expr:
-      VALOR                     { $$ = $1; }  
+      valor                     { $$ = $1; }  
     | ID                        { $$ = make_node(NODE_ID, $1, 0, NULL, 0, NULL, NULL); }
     | expr '+' expr             { $$ = make_node(NODE_BINOP, NULL, 0, NULL, '+', $1, $3); }
     | expr '*' expr             { $$ = make_node(NODE_BINOP, NULL, 0, NULL, '*', $1, $3); } 
@@ -92,7 +91,7 @@ expr:
     ;
 
 
-VALOR : INT                     { $$ = make_node(NODE_INT, NULL, $1, NULL, 0, NULL, NULL); } 
+valor : INT                     { $$ = make_node(NODE_INT, NULL, $1, NULL, 0, NULL, NULL); } 
       | BOOL                    { $$ = make_node(NODE_BOOL, NULL, 0, $1, 0, NULL, NULL); }
        ;
  

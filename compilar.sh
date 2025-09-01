@@ -8,10 +8,10 @@ echo "1. Generando parser con Bison..."
 bison -d calc-sintaxis.y
 
 echo "2. Generando scanner con Flex..."
-flex calc-lexico.l
+flex our_flex.l
 
 echo "3. Compilando el proyecto con GCC..."
-gcc -o compilador ast.c ts.c calc-sintaxis.tab.c lex.yy.c -lfl
+gcc -o compilador ast.c symtab.c typecheck.c calc-sintaxis.tab.c lex.yy.c -lfl
 
 echo "¡Compilación exitosa!"
 echo ""

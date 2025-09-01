@@ -15,7 +15,6 @@ AST *make_node(NodeType type, char *name, int ival, char *bval,
     n->info->eval_type = TYPE_UNKNOWN;
     n->left = left;
     n->right = right;
-    n->extra = NULL;
     n->next = NULL;
     return n;
 }
@@ -36,11 +35,10 @@ void print_ast(AST *node, int depth, int is_last) {
         case NODE_ASSIGN: printf("ASSIGN\n"); break;
         case NODE_RETURN: printf("RETURN\n"); break;
         case NODE_FUNCTION: printf("FUNCTION(%s)\n", node->info->name); break;
-        case NODE_BLOCK:  printf("BLOCK\n"); break;
         default:          printf("NODE(%d)\n", node->type);
     }
 
-    AST* children[3] = {node->left, node->right, node->extra};
+    AST* children[2] = {node->left, node->right};
     int n = 0;
     for (int i = 0; i < 3; i++) if (children[i]) n++;
 

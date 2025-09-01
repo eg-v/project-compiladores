@@ -20,6 +20,7 @@ tipo    (bool|int|void)
 %%
 {digito}+                  { yylval.ival = atoi(yytext); return INT; }
 {bool}                     { yylval.sval = strdup(yytext); return BOOL; }
+"main"                     { return MAIN; }
 "return"                   { return RETURN; }
 "||"                       { return OR; }
 "&&"                       { return AND; }
@@ -27,6 +28,7 @@ tipo    (bool|int|void)
 {tipo}                     { yylval.sval = strdup(yytext); return TIPO; }
 {letra}({letra}|{digito})* { yylval.sval = strdup(yytext); return ID; }
 [+*\-;()={}]               { return *yytext; }
+"//".*                     ;
 .|\n                       ; /* ignore */
 %%
 
