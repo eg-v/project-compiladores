@@ -9,8 +9,8 @@ lex.yy.c: our_flex.l
 calc-sintaxis.tab.c calc-sintaxis.tab.h: calc-sintaxis.y
 	bison -d calc-sintaxis.y
 
-executable: lex.yy.c calc-sintaxis.tab.c ast.c typecheck.c symtab.c
-	$(CC) lex.yy.c calc-sintaxis.tab.c ast.c typecheck.c symtab.c $(CFLAGS) -o executable
+executable: lex.yy.c calc-sintaxis.tab.c ast.c typecheck.c symtab.c interpreter.c
+	$(CC) lex.yy.c calc-sintaxis.tab.c ast.c typecheck.c symtab.c interpreter.c $(CFLAGS) -o executable
 
 clean:
 	rm -f lex.yy.c calc-sintaxis.tab.c calc-sintaxis.tab.h executable

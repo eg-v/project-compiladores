@@ -1899,6 +1899,10 @@ int main(int argc,char *argv[]){
         printf("\n--- Type Checking ---\n");
         SymTab *st = symtab_new();
         check_types(root, st);
+        printf("\n--- Interpreter ---\n");
+        int interp = interpreter(root, st);
+        printf("Interpreter: %d\n", interp);
+        print_ast(root, 0, 1);
     }
     return 0;
 }

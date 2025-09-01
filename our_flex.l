@@ -54,6 +54,9 @@ int main(int argc,char *argv[]){
         printf("\n--- Type Checking ---\n");
         SymTab *st = symtab_new();
         check_types(root, st);
+        printf("\n--- Interpreter ---\n");
+        int interp = interpreter(root, st);
+        printf("Interpreter: %d\n", interp);
     }
     return 0;
 }
