@@ -5,7 +5,7 @@ int main() {
     bool c = true;
 
     // resultado = (true AND true) OR (false AND !false) -> true OR false -> true
-    bool resultado = (a AND c) OR (b AND !b);
+    bool resultado = (a && c) || (b && !b);
 
     return 0;
 }

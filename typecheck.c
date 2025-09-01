@@ -85,7 +85,6 @@ TypeInfo check_types(AST* n, SymTab *st) {
                 if (t == TYPE_ERROR) {
                     symtab_insert(st, n->info);
                     if (n->right) {
-                        printf("TEST\n");
                         check_types(n->right, st);
                         if (n->right->type == NODE_INT || n->right->type == NODE_BOOL || n->right->type == NODE_ID) {
                             n->info->ival = n->right->info->ival;

@@ -28,12 +28,18 @@ tipo    (bool|int|void)
 {tipo}                     { yylval.sval = strdup(yytext); return TIPO; }
 {letra}({letra}|{digito})* { yylval.sval = strdup(yytext); return ID; }
 [+*\-;()={}]               { return *yytext; }
-"//".*                     ;
-.|\n                       ; /* ignore */
+"//".* ;
+
+[ \t\r\n]+ ;
+
+. {
+fprintf(stderr, "Lexical Error at line %d: Unrecognized character '%s'\n", yylineno, yytext);
+}
+
 %%
 
 void yyerror(const char *s) {
-    printf("-> ERROR at line %d: %s\n", yylineno, s);
+    // Empty
 }
 
 int main(int argc,char *argv[]){
