@@ -4,7 +4,7 @@ int main() {
     int b = 10;
     bool continuar = true;
 
-    bool resultado = (a - b == 10) AND continuar; // (true AND true) -> true
+    bool resultado = (true || false) && continuar; // (true AND true) -> true
 
     return 1;
 }

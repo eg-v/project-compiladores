@@ -468,9 +468,9 @@ union yyalloc
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  7
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  21
+#define YYNRULES  22
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  42
+#define YYNSTATES  44
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   266
@@ -521,8 +521,8 @@ static const yytype_int8 yytranslate[] =
 static const yytype_int8 yyrline[] =
 {
        0,    38,    38,    39,    52,    53,    54,    55,    59,    66,
-      75,    82,    83,    84,    85,    86,    87,    88,    89,    90,
-      94,    95
+      75,    79,    93,    94,    95,    96,    97,    98,    99,   100,
+     101,   105,   106
 };
 #endif
 
@@ -565,11 +565,11 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-     -10,    21,   -10,   -10,   -10,    10,     7,    44,    44,    44,
-     -10,   -10,    -2,    49,   -10,    44,   -10,    13,   -10,    56,
+     -10,    21,   -10,   -10,   -10,     2,     7,    44,    44,    44,
+     -10,   -10,    -2,    49,   -10,    44,    11,    17,   -10,    56,
      -10,    -3,   -10,    44,    44,    44,    44,    44,   -10,    63,
-      14,   -10,   -10,    68,    -9,     9,    19,   -10,    16,   -10,
-      35,   -10
+      44,    18,   -10,   -10,    68,    -9,    16,    20,   -10,    63,
+      25,   -10,    35,   -10
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -577,17 +577,17 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       2,     0,     1,    20,    21,    12,     0,     0,     0,     0,
-       3,     7,     0,     0,    11,     0,     9,     0,    12,     0,
-      19,     0,     5,     0,     0,     0,     0,     0,     4,    10,
-       0,     6,    16,    17,    18,    13,    14,    15,     0,     2,
-       0,     8
+       2,     0,     1,    21,    22,    13,     0,     0,     0,     0,
+       3,     7,     0,     0,    12,     0,     9,     0,    13,     0,
+      20,     0,     5,     0,     0,     0,     0,     0,     4,    10,
+       0,     0,     6,    17,    18,    19,    14,    15,    16,    11,
+       0,     2,     0,     8
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int8 yypgoto[] =
 {
-     -10,    -4,   -10,   -10,   -10,    -7,   -10
+     -10,    -5,   -10,   -10,   -10,    -7,   -10
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
@@ -602,13 +602,13 @@ static const yytype_int8 yydefgoto[] =
 static const yytype_int8 yytable[] =
 {
       19,    20,    21,    25,    26,    27,    23,    24,    29,    25,
-      26,    27,    16,    22,    32,    17,    33,    34,    35,    36,
-      37,     2,    26,    27,     3,     4,     5,     6,     7,    30,
-      15,    38,     8,    27,    39,    40,     0,     9,     3,     4,
-       5,     6,     7,     0,     0,     0,     8,     3,     4,    18,
-       0,     9,     0,     0,    41,     8,     0,     0,    23,    24,
+      26,    27,    16,    22,    33,    17,    34,    35,    36,    37,
+      38,     2,    15,    39,     3,     4,     5,     6,     7,    26,
+      27,    30,     8,    31,    27,    40,    42,     9,     3,     4,
+       5,     6,     7,    41,     0,     0,     8,     3,     4,    18,
+       0,     9,     0,     0,    43,     8,     0,     0,    23,    24,
        9,    25,    26,    27,    28,    23,    24,     0,    25,    26,
-      27,    31,    23,    24,     0,    25,    26,    27,    24,     0,
+      27,    32,    23,    24,     0,    25,    26,    27,    24,     0,
       25,    26,    27
 };
 
@@ -616,9 +616,9 @@ static const yytype_int8 yycheck[] =
 {
        7,     8,     9,    12,    13,    14,     9,    10,    15,    12,
       13,    14,     5,    15,    17,     8,    23,    24,    25,    26,
-      27,     0,    13,    14,     3,     4,     5,     6,     7,    16,
-      20,    17,    11,    14,    18,    39,    -1,    16,     3,     4,
-       5,     6,     7,    -1,    -1,    -1,    11,     3,     4,     5,
+      27,     0,    20,    30,     3,     4,     5,     6,     7,    13,
+      14,    20,    11,    16,    14,    17,    41,    16,     3,     4,
+       5,     6,     7,    18,    -1,    -1,    11,     3,     4,     5,
       -1,    16,    -1,    -1,    19,    11,    -1,    -1,     9,    10,
       16,    12,    13,    14,    15,     9,    10,    -1,    12,    13,
       14,    15,     9,    10,    -1,    12,    13,    14,    10,    -1,
@@ -632,24 +632,24 @@ static const yytype_int8 yystos[] =
        0,    22,     0,     3,     4,     5,     6,     7,    11,    16,
       23,    24,    25,    26,    27,    20,     5,     8,     5,    26,
       26,    26,    15,     9,    10,    12,    13,    14,    15,    26,
-      16,    15,    17,    26,    26,    26,    26,    26,    17,    18,
-      22,    19
+      20,    16,    15,    17,    26,    26,    26,    26,    26,    26,
+      17,    18,    22,    19
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
        0,    21,    22,    22,    23,    23,    23,    23,    24,    25,
-      25,    26,    26,    26,    26,    26,    26,    26,    26,    26,
-      27,    27
+      25,    25,    26,    26,    26,    26,    26,    26,    26,    26,
+      26,    27,    27
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     0,     2,     2,     2,     3,     1,     7,     2,
-       3,     1,     1,     3,     3,     3,     3,     3,     3,     2,
-       1,     1
+       3,     4,     1,     1,     3,     3,     3,     3,     3,     3,
+       2,     1,     1
 };
 
 
@@ -1189,74 +1189,90 @@ yyreduce:
 #line 1190 "calc-sintaxis.tab.c"
     break;
 
-  case 11: /* expr: valor  */
-#line 82 "calc-sintaxis.y"
+  case 11: /* decl: TIPO ID '=' expr  */
+#line 79 "calc-sintaxis.y"
+                       {
+        TypeInfo t;
+        if (strcmp((yyvsp[-3].sval), "int") == 0) t = TYPE_INT;
+        else if (strcmp((yyvsp[-3].sval), "bool") == 0) t = TYPE_BOOL;
+        else t = TYPE_UNKNOWN;
+
+        AST *id_node = make_node(NODE_ID, (yyvsp[-2].sval), 0, NULL, 0, NULL, NULL);
+        id_node->info->eval_type =  t;
+        (yyval.ast) = make_node(NODE_DECL, (yyvsp[-2].sval), 0, NULL, 0, id_node, (yyvsp[0].ast));
+        (yyval.ast)->info->eval_type =  t;
+    }
+#line 1206 "calc-sintaxis.tab.c"
+    break;
+
+  case 12: /* expr: valor  */
+#line 93 "calc-sintaxis.y"
                                 { (yyval.ast) = (yyvsp[0].ast); }
-#line 1196 "calc-sintaxis.tab.c"
+#line 1212 "calc-sintaxis.tab.c"
     break;
 
-  case 12: /* expr: ID  */
-#line 83 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_ID, (yyvsp[0].sval), 0, NULL, 0, NULL, NULL); }
-#line 1202 "calc-sintaxis.tab.c"
-    break;
-
-  case 13: /* expr: expr '+' expr  */
-#line 84 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '+', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1208 "calc-sintaxis.tab.c"
-    break;
-
-  case 14: /* expr: expr '*' expr  */
-#line 85 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '*', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1214 "calc-sintaxis.tab.c"
-    break;
-
-  case 15: /* expr: expr '-' expr  */
-#line 86 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '-', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1220 "calc-sintaxis.tab.c"
-    break;
-
-  case 16: /* expr: '(' expr ')'  */
-#line 87 "calc-sintaxis.y"
-                                { (yyval.ast) = (yyvsp[-1].ast); }
-#line 1226 "calc-sintaxis.tab.c"
-    break;
-
-  case 17: /* expr: expr OR expr  */
-#line 88 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '|', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1232 "calc-sintaxis.tab.c"
-    break;
-
-  case 18: /* expr: expr AND expr  */
-#line 89 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '&', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1238 "calc-sintaxis.tab.c"
-    break;
-
-  case 19: /* expr: NOT expr  */
-#line 90 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_UNOP, NULL, 0, NULL, '!', (yyvsp[0].ast), NULL); }
-#line 1244 "calc-sintaxis.tab.c"
-    break;
-
-  case 20: /* valor: INT  */
+  case 13: /* expr: ID  */
 #line 94 "calc-sintaxis.y"
-                                { (yyval.ast) = make_node(NODE_INT, NULL, (yyvsp[0].ival), NULL, 0, NULL, NULL); }
-#line 1250 "calc-sintaxis.tab.c"
+                                { (yyval.ast) = make_node(NODE_ID, (yyvsp[0].sval), 0, NULL, 0, NULL, NULL); }
+#line 1218 "calc-sintaxis.tab.c"
     break;
 
-  case 21: /* valor: BOOL  */
+  case 14: /* expr: expr '+' expr  */
 #line 95 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '+', (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 1224 "calc-sintaxis.tab.c"
+    break;
+
+  case 15: /* expr: expr '*' expr  */
+#line 96 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '*', (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 1230 "calc-sintaxis.tab.c"
+    break;
+
+  case 16: /* expr: expr '-' expr  */
+#line 97 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '-', (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 1236 "calc-sintaxis.tab.c"
+    break;
+
+  case 17: /* expr: '(' expr ')'  */
+#line 98 "calc-sintaxis.y"
+                                { (yyval.ast) = (yyvsp[-1].ast); }
+#line 1242 "calc-sintaxis.tab.c"
+    break;
+
+  case 18: /* expr: expr OR expr  */
+#line 99 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '|', (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 1248 "calc-sintaxis.tab.c"
+    break;
+
+  case 19: /* expr: expr AND expr  */
+#line 100 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, NULL, '&', (yyvsp[-2].ast), (yyvsp[0].ast)); }
+#line 1254 "calc-sintaxis.tab.c"
+    break;
+
+  case 20: /* expr: NOT expr  */
+#line 101 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_UNOP, NULL, 0, NULL, '!', (yyvsp[0].ast), NULL); }
+#line 1260 "calc-sintaxis.tab.c"
+    break;
+
+  case 21: /* valor: INT  */
+#line 105 "calc-sintaxis.y"
+                                { (yyval.ast) = make_node(NODE_INT, NULL, (yyvsp[0].ival), NULL, 0, NULL, NULL); }
+#line 1266 "calc-sintaxis.tab.c"
+    break;
+
+  case 22: /* valor: BOOL  */
+#line 106 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BOOL, NULL, 0, (yyvsp[0].sval), 0, NULL, NULL); }
-#line 1256 "calc-sintaxis.tab.c"
+#line 1272 "calc-sintaxis.tab.c"
     break;
 
 
-#line 1260 "calc-sintaxis.tab.c"
+#line 1276 "calc-sintaxis.tab.c"
 
       default: break;
     }
@@ -1449,5 +1465,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 98 "calc-sintaxis.y"
+#line 109 "calc-sintaxis.y"
 

@@ -40,10 +40,10 @@ void print_ast(AST *node, int depth, int is_last) {
 
     AST* children[2] = {node->left, node->right};
     int n = 0;
-    for (int i = 0; i < 3; i++) if (children[i]) n++;
+    for (int i = 0; i < 2; i++) if (children[i]) n++;
 
     int count = 0;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 2; i++) {
         if (!children[i]) continue;
         count++;
         print_ast(children[i], depth + 1, count == n);
