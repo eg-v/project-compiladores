@@ -19,7 +19,7 @@ tipo    (bool|int|void)
 
 %%
 {digito}+                  { yylval.ival = atoi(yytext); return INT; }
-{bool}                     { yylval.sval = strdup(yytext); return BOOL; }
+{bool}                     { yylval.ival = ((strcmp(strdup(yytext), "true")) ? 0 : 1) ; return BOOL; }
 "main"                     { return MAIN; }
 "return"                   { return RETURN; }
 "||"                       { return OR; }

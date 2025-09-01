@@ -3,14 +3,14 @@
 #include <string.h>
 #include "ast.h"
 
-AST *make_node(NodeType type, char *name, int ival, char *bval,
+AST *make_node(NodeType type, char *name, int ival, int bval,
                char op, AST *left, AST *right) {
     AST *n = malloc(sizeof(AST));
     n->type = type;
     n->info = malloc(sizeof(Info));
     n->info->name = name ? strdup(name) : NULL;
     n->info->ival = ival;
-    n->info->bval = bval ? strdup(bval) : NULL;
+    n->info->bval = bval;
     n->info->op = op;
     n->info->eval_type = TYPE_UNKNOWN;
     n->left = left;
@@ -27,7 +27,7 @@ void print_ast(AST *node, int depth, int is_last) {
 
     switch (node->type) {
         case NODE_INT:    printf("INT(%d)\n", node->info->ival); break;
-        case NODE_BOOL:   printf("BOOL(%s)\n", node->info->bval); break;
+        case NODE_BOOL:   printf("BOOL(%s)\n", (node->info->bval) ? "TRUE" : "FALSE"); break;
         case NODE_ID:     printf("ID(%s)\n", node->info->name); break;
         case NODE_BINOP:  printf("BINOP(%c)\n", node->info->op); break;
         case NODE_UNOP:   printf("UNOP(%c)\n", node->info->op); break;
@@ -50,4 +50,14 @@ void print_ast(AST *node, int depth, int is_last) {
     }
 
     if (node->next) print_ast(node->next, depth, is_last);
+}
+
+const char* type_to_string(TypeInfo t) {
+    switch (t) {
+        case TYPE_INT: return "int";
+        case TYPE_BOOL: return "bool";
+        case TYPE_UNKNOWN: return "unknown";
+        case TYPE_ERROR: return "error";
+        default: return "invalid";
+    }
 }

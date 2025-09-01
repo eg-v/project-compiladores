@@ -1,5 +1,5 @@
 
-#line 3 "lex.yy.c"
+#line 2 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -503,8 +503,8 @@ char *yytext;
 #include "calc-sintaxis.tab.h"
 
 extern AST *root;
+#line 506 "lex.yy.c"
 #line 507 "lex.yy.c"
-#line 508 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -723,7 +723,7 @@ YY_DECL
 	{
 #line 20 "our_flex.l"
 
-#line 727 "lex.yy.c"
+#line 726 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -798,7 +798,7 @@ YY_RULE_SETUP
 case 2:
 YY_RULE_SETUP
 #line 22 "our_flex.l"
-{ yylval.sval = strdup(yytext); return BOOL; }
+{ yylval.ival = ((strcmp(strdup(yytext), "true")) ? 0 : 1) ; return BOOL; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
@@ -863,7 +863,7 @@ YY_RULE_SETUP
 #line 39 "our_flex.l"
 ECHO;
 	YY_BREAK
-#line 867 "lex.yy.c"
+#line 866 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 

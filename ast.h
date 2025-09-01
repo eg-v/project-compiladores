@@ -25,7 +25,7 @@ typedef enum {
 typedef struct Info {
     char* name;
     int ival;
-    char* bval;
+    int bval;
     char op;
     TypeInfo eval_type;
 } Info;
@@ -38,9 +38,11 @@ typedef struct AST {
     struct AST *next;
 } AST;
 
-AST *make_node(NodeType type, char *name, int ival, char *bval,
+AST *make_node(NodeType type, char *name, int ival, int bval,
                char op, AST *left, AST *right);
 
 void print_ast(AST *n, int depth, int is_last);
+
+const char* type_to_string(TypeInfo t);
 
 #endif

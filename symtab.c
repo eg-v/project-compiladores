@@ -48,7 +48,7 @@ void symtab_print(SymTab *st) {
             printf("  Name: %s, Type: %d, value: %d\n", 
                    s->info->name ? s->info->name : "(null)",
                    s->info->eval_type,
-                   s->info->ival);
+                   (s->info->eval_type == TYPE_INT) ? s->info->ival : s->info->bval);
         }
     }
     printf("====================\n");
@@ -64,7 +64,11 @@ int symtab_get_value(SymTab *st, const char *name, int *found) {
                 //     return 0;
                 // }
                 *found = 1;
-                return s->info->ival;
+                if (s->info->eval_type == TYPE_INT) {
+                    return s->info->ival;
+                } else if (s->info->eval_type == TYPE_BOOL) {
+                    return s->info->bval;
+                }
             }
         }
     }
@@ -77,8 +81,12 @@ void symtab_set_value(SymTab *st, const char *name, int value) {
     for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
         for (Symbol *s = scope->head; s != NULL; s = s->next) {
             if (strcmp(s->info->name, name) == 0) {
-                s->info->ival = value;
-                // s->info->initialized = true;
+                if (s->info->eval_type == TYPE_INT) {
+                    s->info->ival = value;
+                    // s->info->initialized = true;
+                } else if (s->info->eval_type == TYPE_BOOL) {
+                    s->info->bval = value;
+                }
                 return;
             }
         }
