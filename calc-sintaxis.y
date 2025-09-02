@@ -52,7 +52,8 @@ stmt:
       expr ';'                  { $$ = $1; }
     | decl ';'                  { $$ = $1; }
     | RETURN expr ';'           { $$ = make_node(NODE_RETURN, NULL, 0, 0, 0, $2, NULL); }
-    | def_main              { $$ = $1; }
+    | RETURN ';'                { $$ = make_node(NODE_RETURN, NULL, 0, 0, 0, NULL, NULL); }
+    | def_main                  { $$ = $1; }
     ;
 
 def_main:
@@ -60,6 +61,7 @@ def_main:
         TypeInfo t;
         if (strcmp($1, "int") == 0) t = TYPE_INT;
         else if (strcmp($1, "bool") == 0) t = TYPE_BOOL;
+        else if (strcmp($1, "void") == 0) t = TYPE_VOID;
         else t = TYPE_UNKNOWN;
 
         AST *fn = make_node(NODE_FUNCTION, "main", 0, 0, 0, $6, NULL);
@@ -74,6 +76,7 @@ decl:
           TypeInfo t;
           if (strcmp($1, "int") == 0) t = TYPE_INT;
           else if (strcmp($1, "bool") == 0) t = TYPE_BOOL;
+          else if (strcmp($1, "void") == 0) t = TYPE_VOID;
           else t = TYPE_UNKNOWN;
 
           $$ = make_node(NODE_DECL, $2, 0, 0, 0, NULL, NULL);
@@ -87,11 +90,10 @@ decl:
         TypeInfo t;
         if (strcmp($1, "int") == 0) t = TYPE_INT;
         else if (strcmp($1, "bool") == 0) t = TYPE_BOOL;
+        else if (strcmp($1, "void") == 0) t = TYPE_VOID;
         else t = TYPE_UNKNOWN;
 
-        AST *id_node = make_node(NODE_ID, $2, 0, 0, 0, NULL, NULL);
-        id_node->info->eval_type =  t;
-        $$ = make_node(NODE_DECL, $2, 0, 0, 0, id_node, $4);
+        $$ = make_node(NODE_DECL, $2, 0, 0, 0, NULL, $4);
         $$->info->eval_type =  t;
     }
     ;

@@ -1,10 +1,7 @@
-int c = 1;
-
-int main() {
-    // Declaración de variable
+int a = 4;
+void main() {
     int x = 4;
-    // La siguiente línea retorna el valor.
     int y = 8;
-    int b = 4 * 8 + c;
-    return b; // Fin del programa.
+    int b = 4 * 8 * a;
+    return;
 }

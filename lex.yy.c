@@ -384,8 +384,8 @@ struct yy_trans_info
 	};
 static const flex_int16_t yy_accept[49] =
     {   0,
-        0,    0,   15,   13,   12,   12,   13,   10,   13,    1,
-        9,    9,    9,    9,    9,    9,    9,    9,   13,    7,
+        0,    0,   15,   13,   12,   12,    7,   13,   10,   13,
+        1,    9,    9,    9,    9,    9,    9,    9,    9,   13,
        12,    6,   11,    1,    9,    9,    9,    9,    9,    9,
         9,    9,    5,   11,    9,    9,    8,    9,    9,    9,
         9,    9,    3,    9,    2,    9,    4,    0
@@ -396,17 +396,17 @@ static const YY_CHAR yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    2,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    1,    1,    1,    1,    1,    4,    1,    5,
-        5,    5,    5,    1,    5,    1,    6,    7,    7,    7,
-        7,    7,    7,    7,    7,    7,    7,    1,    5,    1,
-        5,    1,    1,    1,    8,    8,    8,    8,    8,    8,
-        8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
-        8,    8,    8,    8,    8,    8,    8,    8,    8,    8,
-        1,    1,    1,    1,    1,    1,    9,   10,    8,   11,
+        1,    2,    4,    1,    1,    1,    1,    5,    1,    6,
+        6,    6,    6,    1,    6,    1,    7,    8,    8,    8,
+        8,    8,    8,    8,    8,    8,    8,    1,    6,    1,
+        6,    1,    1,    1,    9,    9,    9,    9,    9,    9,
+        9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
+        9,    9,    9,    9,    9,    9,    9,    9,    9,    9,
+        1,    1,    1,    1,    1,    1,   10,   11,    9,   12,
 
-       12,   13,    8,    8,   14,    8,    8,   15,   16,   17,
-       18,    8,    8,   19,   20,   21,   22,   23,    8,    8,
-        8,    8,    5,   24,    5,   25,    1,    1,    1,    1,
+       13,   14,    9,    9,   15,    9,    9,   16,   17,   18,
+       19,    9,    9,   20,   21,   22,   23,   24,    9,    9,
+        9,    9,    6,   25,    6,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -425,24 +425,24 @@ static const YY_CHAR yy_ec[256] =
 
 static const YY_CHAR yy_meta[26] =
     {   0,
-        1,    1,    2,    1,    1,    1,    3,    3,    3,    3,
+        1,    1,    2,    1,    1,    1,    1,    3,    3,    3,
         3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    1,    1
+        3,    3,    3,    3,    1
     } ;
 
 static const flex_int16_t yy_base[51] =
     {   0,
-        0,    0,   63,   64,   24,   26,   58,   64,   55,   53,
-        0,   41,   49,   40,   47,   43,   35,   35,   28,   64,
-       28,   64,    0,   44,    0,   32,   34,   27,   33,   25,
-       23,   30,   64,    0,   28,   22,    0,   24,   18,   27,
-       27,   25,    0,   17,    0,   18,    0,   64,   30,   31
+        0,    0,   63,   64,   24,   26,   64,   57,   64,   54,
+       52,    0,   40,   48,   39,   46,   42,   34,   34,   27,
+       28,   64,    0,   43,    0,   31,   33,   26,   32,   24,
+       22,   29,   64,    0,   27,   21,    0,   23,   17,   26,
+       26,   24,    0,   16,    0,   17,    0,   64,   30,   31
     } ;
 
 static const flex_int16_t yy_def[51] =
     {   0,
        48,    1,   48,   48,   48,   48,   48,   48,   48,   48,
-       49,   49,   49,   49,   49,   49,   49,   49,   48,   48,
+       48,   49,   49,   49,   49,   49,   49,   49,   49,   48,
        48,   48,   50,   48,   49,   49,   49,   49,   49,   49,
        49,   49,   48,   50,   49,   49,   49,   49,   49,   49,
        49,   49,   49,   49,   49,   49,   49,    0,   48,   48
@@ -450,9 +450,9 @@ static const flex_int16_t yy_def[51] =
 
 static const flex_int16_t yy_nxt[90] =
     {   0,
-        4,    5,    6,    7,    8,    9,   10,   11,   11,   12,
-       11,   11,   13,   14,   11,   15,   11,   11,   16,   11,
-       17,   11,   18,   19,   20,   21,   21,   21,   21,   21,
+        4,    5,    6,    7,    8,    9,   10,   11,   12,   12,
+       13,   12,   12,   14,   15,   12,   16,   12,   12,   17,
+       12,   18,   12,   19,   20,   21,   21,   21,   21,   21,
        21,   34,   25,   34,   47,   46,   45,   37,   45,   44,
        43,   42,   37,   41,   40,   39,   38,   37,   36,   35,
        24,   33,   32,   31,   30,   29,   28,   27,   26,   24,
@@ -468,8 +468,8 @@ static const flex_int16_t yy_chk[90] =
         1,    1,    1,    1,    1,    5,    5,    6,    6,   21,
        21,   50,   49,   50,   46,   44,   42,   41,   40,   39,
        38,   36,   35,   32,   31,   30,   29,   28,   27,   26,
-       24,   19,   18,   17,   16,   15,   14,   13,   12,   10,
-        9,    7,    3,   48,   48,   48,   48,   48,   48,   48,
+       24,   20,   19,   18,   17,   16,   15,   14,   13,   11,
+       10,    8,    3,   48,   48,   48,   48,   48,   48,   48,
        48,   48,   48,   48,   48,   48,   48,   48,   48,   48,
        48,   48,   48,   48,   48,   48,   48,   48,   48
     } ;
@@ -503,8 +503,11 @@ char *yytext;
 #include "calc-sintaxis.tab.h"
 
 extern AST *root;
-#line 507 "lex.yy.c"
-#line 508 "lex.yy.c"
+
+int check_types(AST *root, SymTab *st);
+int interpreter(AST *root, SymTab *st); 
+#line 510 "lex.yy.c"
+#line 511 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -721,9 +724,9 @@ YY_DECL
 		}
 
 	{
-#line 20 "our_flex.l"
+#line 23 "our_flex.l"
 
-#line 727 "lex.yy.c"
+#line 730 "lex.yy.c"
 
 	while ( /*CONSTCOND*/1 )		/* loops until end-of-file is reached */
 		{
@@ -792,78 +795,78 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 21 "our_flex.l"
+#line 24 "our_flex.l"
 { yylval.ival = atoi(yytext); return INT; }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 22 "our_flex.l"
+#line 25 "our_flex.l"
 { yylval.ival = ((strcmp(yytext, "true") == 0) ? 1 : 0) ; return BOOL; }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 23 "our_flex.l"
+#line 26 "our_flex.l"
 { return MAIN; }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 24 "our_flex.l"
+#line 27 "our_flex.l"
 { return RETURN; }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 25 "our_flex.l"
+#line 28 "our_flex.l"
 { return OR; }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 26 "our_flex.l"
+#line 29 "our_flex.l"
 { return AND; }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 27 "our_flex.l"
+#line 30 "our_flex.l"
 { return NOT; }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 28 "our_flex.l"
+#line 31 "our_flex.l"
 { yylval.sval = strdup(yytext); return TIPO; }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 29 "our_flex.l"
+#line 32 "our_flex.l"
 { yylval.sval = strdup(yytext); return ID; }
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 30 "our_flex.l"
+#line 33 "our_flex.l"
 { return *yytext; }
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 31 "our_flex.l"
+#line 34 "our_flex.l"
 ;
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 33 "our_flex.l"
+#line 36 "our_flex.l"
 ;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 35 "our_flex.l"
+#line 38 "our_flex.l"
 {
 fprintf(stderr, "Lexical Error at line %d: Unrecognized character '%s'\n", yylineno, yytext);
 }
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 39 "our_flex.l"
+#line 42 "our_flex.l"
 ECHO;
 	YY_BREAK
-#line 867 "lex.yy.c"
+#line 870 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1880,28 +1883,37 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 39 "our_flex.l"
+#line 42 "our_flex.l"
 
 
 void yyerror(const char *s) {
-    // Empty
+    fprintf(stderr, "Parse error: %s at line %d\n", s, yylineno);
 }
+
 
 int main(int argc,char *argv[]){
     ++argv,--argc;
-    if (argc > 0)
-        yyin = fopen(argv[0],"r");
-    else
+    if (argc > 0) {
+        yyin = fopen(argv[0], "r");
+        if (!yyin) {
+            fprintf(stderr, "Error: no se pudo abrir el archivo %s\n", argv[0]);
+            exit(1);
+        }
+    } else {
         yyin = stdin;
+    }
 
     if (yyparse() == 0) {
         print_ast(root, 0, 1);
         printf("\n--- Type Checking ---\n");
         SymTab *st = symtab_new();
-        check_types(root, st);
-        printf("\n--- Interpreter ---\n");
-        int interp = interpreter(root, st);
-        printf("Interpreter: %d\n", interp);
+        if (root) {
+            check_types(root, st);
+            printf("\n--- Interpreter ---\n");
+            interpreter(root, st);
+        } else {
+            fprintf(stderr, "No AST generated (root == NULL)\n");
+        }
     }
     return 0;
 }

@@ -88,7 +88,16 @@ TypeInfo check_types(AST* n, SymTab *st) {
             break;
 
             case NODE_RETURN: {
-                TypeInfo ret_type = check_types(n->left, st);
+                TypeInfo ret_type = TYPE_UNKNOWN;
+                if (n->left) {
+                    ret_type = check_types(n->left, st);
+                } else {
+                    if (type_main == TYPE_VOID)
+                        ret_type = TYPE_VOID;
+                    else
+                        ret_type = TYPE_UNKNOWN;
+                }
+
                 if (ret_type != type_main) {
                     fprintf(stderr, "Type error: return type mismatch (expected %s, got %s)\n",
                         type_to_string(type_main),
@@ -100,7 +109,11 @@ TypeInfo check_types(AST* n, SymTab *st) {
 
           case NODE_FUNCTION: {
             TypeInfo declared_type = n->info->eval_type;
-            type_main = declared_type;
+            if (declared_type == TYPE_UNKNOWN) {
+                type_main = TYPE_VOID;
+            } else {
+                type_main = declared_type;
+            }
             check_types(n->left, st);
             symtab_print(st);
             break;

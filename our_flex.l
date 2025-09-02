@@ -7,6 +7,9 @@
 #include "calc-sintaxis.tab.h"
 
 extern AST *root;
+
+int check_types(AST *root, SymTab *st);
+int interpreter(AST *root, SymTab *st); 
 %}
 
 %option noyywrap
@@ -24,7 +27,7 @@ tipo    (bool|int|void)
 "return"                   { return RETURN; }
 "||"                       { return OR; }
 "&&"                       { return AND; }
-"~"                        { return NOT; }
+"!"                        { return NOT; }
 {tipo}                     { yylval.sval = strdup(yytext); return TIPO; }
 {letra}({letra}|{digito})* { yylval.sval = strdup(yytext); return ID; }
 [+*\-;()={}]               { return *yytext; }
@@ -39,24 +42,33 @@ fprintf(stderr, "Lexical Error at line %d: Unrecognized character '%s'\n", yylin
 %%
 
 void yyerror(const char *s) {
-    // Empty
+    fprintf(stderr, "Parse error: %s at line %d\n", s, yylineno);
 }
+
 
 int main(int argc,char *argv[]){
     ++argv,--argc;
-    if (argc > 0)
-        yyin = fopen(argv[0],"r");
-    else
+    if (argc > 0) {
+        yyin = fopen(argv[0], "r");
+        if (!yyin) {
+            fprintf(stderr, "Error: no se pudo abrir el archivo %s\n", argv[0]);
+            exit(1);
+        }
+    } else {
         yyin = stdin;
+    }
 
     if (yyparse() == 0) {
         print_ast(root, 0, 1);
         printf("\n--- Type Checking ---\n");
         SymTab *st = symtab_new();
-        check_types(root, st);
-        printf("\n--- Interpreter ---\n");
-        int interp = interpreter(root, st);
-        printf("Interpreter: %d\n", interp);
+        if (root) {
+            check_types(root, st);
+            printf("\n--- Interpreter ---\n");
+            interpreter(root, st);
+        } else {
+            fprintf(stderr, "No AST generated (root == NULL)\n");
+        }
     }
     return 0;
 }

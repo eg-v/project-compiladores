@@ -18,16 +18,6 @@ void symtab_insert(SymTab *st, Info *info) {
     st->head = s;
 }
 
-TypeInfo symtab_lookup(SymTab *st, const char *name) {
-    for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
-        for (Symbol *s = scope->head; s != NULL; s = s->next) {
-            if (strcmp(s->info->name, name) == 0) {
-                return s->info->eval_type;
-            }
-        }
-    }
-    return TYPE_ERROR;
-}
 
 TypeInfo symtab_scope(SymTab *st, const char *name) {
     SymTab *scope = st;
@@ -41,34 +31,33 @@ TypeInfo symtab_scope(SymTab *st, const char *name) {
 
 void symtab_print(SymTab *st) {
     printf("=== Symbol Table ===\n");
-    int scope_level = 0;
-    for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
-        printf("Scope level %d:\n", scope_level++);
-        for (Symbol *s = scope->head; s != NULL; s = s->next) {
-            printf("  Name: %s, Type: %d, value: %d\n", 
-                   s->info->name ? s->info->name : "(null)",
-                   s->info->eval_type,
-                   (s->info->eval_type == TYPE_INT) ? s->info->ival : s->info->bval);
-        }
+    printf("Scope level 0:\n");
+    for (Symbol *s = st->head; s != NULL; s = s->next) {
+        printf("  Name: %s, Type: %s, value: %d\n",
+            s->info->name ? s->info->name : "(null)",
+            type_to_string(s->info->eval_type),
+            (s->info->eval_type == TYPE_INT) ? s->info->ival : s->info->bval);
     }
     printf("====================\n");
 }
 
+TypeInfo symtab_lookup(SymTab *st, const char *name) {
+    for (Symbol *s = st->head; s != NULL; s = s->next) {
+        if (s->info->name && strcmp(s->info->name, name) == 0) {
+            return s->info->eval_type;
+        }
+    }
+    return TYPE_ERROR;
+}
+
 int symtab_get_value(SymTab *st, const char *name, int *found) {
-    for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
-        for (Symbol *s = scope->head; s != NULL; s = s->next) {
-            if (strcmp(s->info->name, name) == 0) {
-                // if (!s->info->initialized) {
-                //     fprintf(stderr, "Warning: variable '%s' used before initialization\n", name);
-                //     *found = 0;
-                //     return 0;
-                // }
-                *found = 1;
-                if (s->info->eval_type == TYPE_INT) {
-                    return s->info->ival;
-                } else if (s->info->eval_type == TYPE_BOOL) {
-                    return s->info->bval;
-                }
+    for (Symbol *s = st->head; s != NULL; s = s->next) {
+        if (strcmp(s->info->name, name) == 0) {
+            *found = 1;
+            if (s->info->eval_type == TYPE_INT) {
+                return s->info->ival;
+            } else if (s->info->eval_type == TYPE_BOOL) {
+                return s->info->bval;
             }
         }
     }
@@ -76,19 +65,15 @@ int symtab_get_value(SymTab *st, const char *name, int *found) {
     return 0;
 }
 
-
 void symtab_set_value(SymTab *st, const char *name, int value) {
-    for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
-        for (Symbol *s = scope->head; s != NULL; s = s->next) {
-            if (strcmp(s->info->name, name) == 0) {
-                if (s->info->eval_type == TYPE_INT) {
-                    s->info->ival = value;
-                    // s->info->initialized = true;
-                } else if (s->info->eval_type == TYPE_BOOL) {
-                    s->info->bval = value;
-                }
-                return;
+    for (Symbol *s = st->head; s != NULL; s = s->next) {
+        if (strcmp(s->info->name, name) == 0) {
+            if (s->info->eval_type == TYPE_INT) {
+                s->info->ival = value;
+            } else if (s->info->eval_type == TYPE_BOOL) {
+                s->info->bval = value;
             }
+            return;
         }
     }
     fprintf(stderr, "Error: assignment to undeclared variable '%s'\n", name);

@@ -15,9 +15,9 @@ typedef enum {
 } NodeType;
 
 typedef enum {
+    TYPE_VOID,
     TYPE_INT,
     TYPE_BOOL,
-    TYPE_VOID,
     TYPE_UNKNOWN,
     TYPE_ERROR
 } TypeInfo;
@@ -27,6 +27,7 @@ typedef struct Info {
     int ival;
     int bval;
     char op;
+    int initialized;
     TypeInfo eval_type;
 } Info;
 

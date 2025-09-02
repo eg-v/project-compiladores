@@ -28,13 +28,13 @@ void print_ast(AST *node, int depth, int is_last) {
     switch (node->type) {
         case NODE_INT:    printf("INT(%d)\n", node->info->ival); break;
         case NODE_BOOL:   printf("BOOL(%s)\n", (node->info->bval) ? "TRUE" : "FALSE"); break;
-        case NODE_ID:     printf("ID(%s)\n", node->info->name); break;
+        case NODE_ID:     printf("ID(%s)\n", node->info->name ? node->info->name : "(null)"); break;
+        case NODE_DECL:   printf("DECL(%s)\n", node->info->name ? node->info->name : "(null)"); break;
+        case NODE_FUNCTION: printf("FUNCTION(%s)\n", node->info->name ? node->info->name : "(null)"); break;
         case NODE_BINOP:  printf("BINOP(%c)\n", node->info->op); break;
         case NODE_UNOP:   printf("UNOP(%c)\n", node->info->op); break;
-        case NODE_DECL:   printf("DECL(%s)\n", node->info->name); break;
         case NODE_ASSIGN: printf("ASSIGN\n"); break;
         case NODE_RETURN: printf("RETURN\n"); break;
-        case NODE_FUNCTION: printf("FUNCTION(%s)\n", node->info->name); break;
         default:          printf("NODE(%d)\n", node->type);
     }
 
@@ -56,6 +56,7 @@ const char* type_to_string(TypeInfo t) {
     switch (t) {
         case TYPE_INT: return "int";
         case TYPE_BOOL: return "bool";
+        case TYPE_VOID: return "void";
         case TYPE_UNKNOWN: return "unknown";
         case TYPE_ERROR: return "error";
         default: return "invalid";
