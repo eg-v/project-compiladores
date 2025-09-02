@@ -1911,6 +1911,9 @@ int main(int argc,char *argv[]){
             check_types(root, st);
             printf("\n--- Interpreter ---\n");
             interpreter(root, st);
+            printf("----- SEUDO-ASSEMBLY -----\n");
+            generate_asm(root);
+            printf("--------------------------\n");
         } else {
             fprintf(stderr, "No AST generated (root == NULL)\n");
         }

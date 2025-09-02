@@ -19,6 +19,58 @@ AST *make_node(NodeType type, char *name, int ival, int bval,
     return n;
 }
 
+void generate_asm(AST *n) {
+    if (!n) return;
+
+    switch (n->type) {
+        case NODE_INT:
+            printf("LOADI %d\n", n->info->ival);
+            break;
+        case NODE_BOOL:
+            printf("LOADI %d\n", n->info->bval);
+            break;
+        case NODE_ID:
+            printf("LOAD %s\n", n->info->name);
+            break;
+        case NODE_BINOP:
+            generate_asm(n->left);
+            generate_asm(n->right);
+            switch(n->info->op) {
+                case '+': printf("ADD\n"); break;
+                case '-': printf("SUB\n"); break;
+                case '*': printf("MUL\n"); break;
+                case '|': printf("OR\n"); break;
+                case '&': printf("AND\n"); break;
+            }
+            break;
+        case NODE_UNOP:
+            generate_asm(n->left);
+            if (n->info->op == '!') printf("NOT\n");
+            break;
+        case NODE_ASSIGN:
+            generate_asm(n->right);
+            printf("STORE %s\n", n->left->info->name);
+            break;
+        case NODE_DECL:
+            if (n->right) {
+                generate_asm(n->right);
+                printf("STORE %s\n", n->info->name);
+            }
+            break;
+        case NODE_RETURN:
+            if (n->left) generate_asm(n->left);
+            printf("RETURN\n");
+            break;
+        case NODE_FUNCTION:
+            printf("FUNC %s\n", n->info->name);
+            generate_asm(n->left);
+            printf("END_FUNC\n");
+            break;
+    }
+
+    if (n->next) generate_asm(n->next);
+}
+
 void print_ast(AST *node, int depth, int is_last) {
     if (!node) return;
 
