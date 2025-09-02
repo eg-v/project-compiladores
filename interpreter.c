@@ -13,22 +13,13 @@ int interpreter(AST* n, SymTab *st) {
             break;
 
         case NODE_ID: {
-            TypeInfo t = symtab_lookup(st, n->info->name);
-            if (t == TYPE_ERROR) {
-                fprintf(stderr, "Error: undeclared variable '%s'\n", n->info->name);
-                t = TYPE_UNKNOWN;
+            int found;
+            int value = symtab_get_value(st, n->info->name, &found);
+            if (found) {
+                return value;
             } else {
-                int found;
-                int value = symtab_get_value(st, n->info->name, &found);
-                if (found) {
-                    if (n->info->eval_type == TYPE_INT) {
-                        return n->info->ival;
-                    } else if (n->info->eval_type == TYPE_BOOL) {
-                        return n->info->bval;
-                    }
-                }
+                fprintf(stderr, "Error: undeclared variable '%s'\n", n->info->name);
             }
-            n->info->eval_type = t;
             break;
         }
 
@@ -92,36 +83,20 @@ int interpreter(AST* n, SymTab *st) {
         case NODE_ASSIGN: {
             int rhs = interpreter(n->right, st);
             if (n->left && n->left->type == NODE_ID) {
-                if (n->left->info->eval_type == TYPE_INT) {
-                    n->left->info->ival = rhs;
-                    n->info->ival = rhs;
-                } else if (n->left->info->eval_type == TYPE_BOOL) {
-                    n->left->info->bval = rhs;
-                    n->info->bval = rhs;
-                }
+                symtab_set_value(st, n->left->info->name, rhs);
             }
-            // return rhs;
+            return rhs;
             break;
         }
 
           case NODE_DECL: {
             if (n->info->name) {
-                TypeInfo t = symtab_scope(st, n->info->name);
-                if (t == TYPE_ERROR) {
+                if (symtab_scope(st, n->info->name) == TYPE_ERROR) {
                     symtab_insert(st, n->info);
-                    if (n->right) {
-                        int rhs = interpreter(n->right, st);
-                        if (n->left && n->left->type == NODE_ID) {
-                            if (n->left->info->eval_type == TYPE_INT) {
-                                n->left->info->ival = rhs;
-                                n->info->ival = rhs;
-                            } else if (n->left->info->eval_type == TYPE_BOOL) {
-                                n->left->info->bval = rhs;
-                                n->info->bval = rhs;
-                            }
-                        }
-                        // return rhs;
-                    }
+                }
+                if (n->right) {
+                    int rhs = interpreter(n->right, st);
+                    symtab_set_value(st, n->info->name, rhs);
                 }
             }
             break;
@@ -135,7 +110,7 @@ int interpreter(AST* n, SymTab *st) {
             }
 
           case NODE_FUNCTION: {
-              return 10;
+              return interpreter(n->left, st);
               break;
             }
         default:
@@ -144,5 +119,4 @@ int interpreter(AST* n, SymTab *st) {
 
     if (n->next) interpreter(n->next, st);
 
-    return 50;
 }

@@ -11,7 +11,7 @@ echo "2. Generando scanner con Flex..."
 flex our_flex.l
 
 echo "3. Compilando el proyecto con GCC..."
-gcc -o compilador ast.c symtab.c typecheck.c calc-sintaxis.tab.c lex.yy.c -lfl
+gcc -o compilador ast.c symtab.c typecheck.c interpreter.c calc-sintaxis.tab.c lex.yy.c -lfl
 
 echo "¡Compilación exitosa!"
 echo ""

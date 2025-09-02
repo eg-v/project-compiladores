@@ -1,7 +1,10 @@
-// Este programa prueba el manejo de comentarios.
+int c = 1;
+
 int main() {
     // Declaración de variable
-    int x = 10;
+    int x = 4;
     // La siguiente línea retorna el valor.
-    return x; // Fin del programa.
+    int y = 8;
+    int b = 4 * 8 + c;
+    return b; // Fin del programa.
 }
