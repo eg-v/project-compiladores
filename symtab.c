@@ -78,3 +78,14 @@ void symtab_set_value(SymTab *st, const char *name, int value) {
     }
     fprintf(stderr, "Error: assignment to undeclared variable '%s'\n", name);
 }
+
+void symtab_mark_initialized(SymTab *st, const char *name) {
+    for (Symbol *s = st->head; s != NULL; s = s->next) {
+        if (s->info->name && strcmp(s->info->name, name) == 0) {
+            s->info->initialized = 1;
+            return;
+        }
+    }
+    fprintf(stderr, "Warning: trying to mark undeclared variable '%s' as initialized\n", name);
+}
+

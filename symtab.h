@@ -27,5 +27,6 @@ TypeInfo symtab_scope(SymTab *st, const char *name);
 void symtab_print(SymTab *st);
 int symtab_get_value(SymTab *st, const char *name, int *found);
 void symtab_set_value(SymTab *st, const char *name, int value);
+void symtab_mark_initialized(SymTab *st, const char *name);
 
 #endif

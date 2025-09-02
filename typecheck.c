@@ -109,11 +109,7 @@ TypeInfo check_types(AST* n, SymTab *st) {
 
           case NODE_FUNCTION: {
             TypeInfo declared_type = n->info->eval_type;
-            if (declared_type == TYPE_UNKNOWN) {
-                type_main = TYPE_VOID;
-            } else {
-                type_main = declared_type;
-            }
+            type_main = declared_type;
             check_types(n->left, st);
             symtab_print(st);
             break;
