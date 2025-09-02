@@ -118,5 +118,5 @@ int interpreter(AST* n, SymTab *st) {
     }
 
     if (n->next) interpreter(n->next, st);
-
+    return 0;
 }
