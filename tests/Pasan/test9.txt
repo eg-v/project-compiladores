@@ -1,7 +1,0 @@
-// Este programa prueba el manejo de comentarios.
-int main() {
-    // Declaración de variable
-    int x = 10;
-    // La siguiente línea retorna el valor.
-    return x; // Fin del programa.
-}

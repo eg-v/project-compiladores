@@ -1,6 +1,0 @@
-// La multiplicación (2 * 5) debe ejecutarse antes que la suma.
-int main() {
-    int valor;
-    valor = 10 + 2 * 5; // Debería ser 10 + 10 = 20
-    return valor;
-}

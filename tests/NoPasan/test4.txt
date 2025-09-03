@@ -1,6 +1,0 @@
-// No se puede asignar 'true' a una variable de tipo 'int'.
-int main() {
-    int numero;
-    numero = true; // Error: tipos incompatibles en la asignación.
-    return numero;
-}

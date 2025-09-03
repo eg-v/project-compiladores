@@ -1,7 +1,0 @@
-// La variable 'secreto' solo existe dentro de las llaves.
-int main() {
-    {
-        int secreto = 42;
-    }
-    return secreto; // Error: 'secreto' no está declarado en este ámbito.
-}

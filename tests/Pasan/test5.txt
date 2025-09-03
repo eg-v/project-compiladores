@@ -1,7 +1,0 @@
-// La 'x' local (100) oculta a la 'x' global (5) dentro de main.
-int x = 5;
-
-int main() {
-    int x = 100; // Esta 'x' es la que se usa dentro de main.
-    return x; // Retornará 100, no 5.
-}
