@@ -1,76 +1,78 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "ast.h"
 #include "symtab.h"
 
-int interpreter(AST* n, SymTab *st) {
+void interpreter(AST* n, SymTab *st) {
     switch (n->type) {
         case NODE_INT:
-            return n->info->ival;
+            // return n->info->ival;
             break;
 
         case NODE_BOOL:
-            return n->info->bval;
+            // return n->info->bval;
             break;
 
         case NODE_ID: {
-            TypeInfo t = symtab_lookup(st, n->info->name);
-            if (t == TYPE_ERROR) {
-                fprintf(stderr, "Error: undeclared variable '%s'\n", n->info->name);
-                t = TYPE_UNKNOWN;
-            } else {
-                int found;
-                int value = symtab_get_value(st, n->info->name, &found);
-                if (found) {
-                    if (n->info->eval_type == TYPE_INT) {
-                        return n->info->ival;
-                    } else if (n->info->eval_type == TYPE_BOOL) {
-                        return n->info->bval;
-                    }
+            int found;
+            int value = symtab_get_value(st, n->info->name, &found);
+            if (found) {
+                if (n->info->eval_type == TYPE_INT) {
+                    n->info->ival = value;
+                } else if (n->info->eval_type == TYPE_BOOL) {
+                    n->info->bval = value;
                 }
+            } else {
+                fprintf(stderr, "Error: variable '%s' used before initialization\n", n->info->name);
+                exit(1);
             }
+            TypeInfo t = symtab_lookup(st, n->info->name);
             n->info->eval_type = t;
             break;
         }
 
 
         case NODE_BINOP: {
-            int lt = interpreter(n->left, st);
-            int rt = interpreter(n->right, st);
+            interpreter(n->left, st);
+            interpreter(n->right, st);
             if (n->info->op=='+'||n->info->op=='-'||n->info->op=='*') {
+                int lt = n->left->info->ival;
+                int rt = n->right->info->ival;
                 switch(n->info->op) {
                     case '+': {
                                   int op_result = lt + rt;
                                   n->info->ival = op_result;
-                                  printf("+ RESULT: %d\n", op_result);
-                                  return op_result;
+                                  // return op_result;
                                   break;
                               }
                     case '-': {
                                   int op_result = lt - rt;
                                   n->info->ival = op_result;
-                                  return op_result;
+                                  // return op_result;
                                   break;
                               }
                     case '*': {
                                   int op_result = lt * rt;
                                   n->info->ival = op_result;
-                                  return op_result;
+                                  // return op_result;
                                   break;
                               }
                 }
         }
         if (n->info->op=='|'||n->info->op=='&') {
+            int lt = n->left->info->bval;
+            int rt = n->right->info->bval;
             switch(n->info->op) {
                 case '|': {
                               int op_result = lt || rt;
                               n->info->bval = op_result;
-                              return op_result;
+                              // return op_result;
                               break;
                           }
                 case '&': {
                               int op_result = lt && rt;
                               n->info->bval = op_result;
-                              return op_result;
+                              // return op_result;
                               break;
                           }
             }
@@ -79,25 +81,31 @@ int interpreter(AST* n, SymTab *st) {
      }
 
         case NODE_UNOP: {
-            TypeInfo et = interpreter(n->left, st);
+            interpreter(n->left, st);
+            int et = n->left->info->bval;
             int op_result;
             if (n->info->op=='!') {
                 op_result = !et;
                 n->info->bval = op_result;
+                // n->info->eval_type = TYPE_BOOL;
             }
-            return op_result;
+            // return op_result;
             break;
         }
 
         case NODE_ASSIGN: {
-            int rhs = interpreter(n->right, st);
+            interpreter(n->right, st);
             if (n->left && n->left->type == NODE_ID) {
                 if (n->left->info->eval_type == TYPE_INT) {
+                    int rhs = n->right->info->ival;
                     n->left->info->ival = rhs;
                     n->info->ival = rhs;
+                    symtab_set_value(st, n->left->info->name, n->left->info->ival);
                 } else if (n->left->info->eval_type == TYPE_BOOL) {
+                    int rhs = n->right->info->bval;
                     n->left->info->bval = rhs;
                     n->info->bval = rhs;
+                    symtab_set_value(st, n->left->info->name, n->left->info->bval);
                 }
             }
             // return rhs;
@@ -106,36 +114,43 @@ int interpreter(AST* n, SymTab *st) {
 
           case NODE_DECL: {
             if (n->info->name) {
-                TypeInfo t = symtab_scope(st, n->info->name);
-                if (t == TYPE_ERROR) {
-                    symtab_insert(st, n->info);
-                    if (n->right) {
-                        int rhs = interpreter(n->right, st);
-                        if (n->left && n->left->type == NODE_ID) {
-                            if (n->left->info->eval_type == TYPE_INT) {
-                                n->left->info->ival = rhs;
-                                n->info->ival = rhs;
-                            } else if (n->left->info->eval_type == TYPE_BOOL) {
-                                n->left->info->bval = rhs;
-                                n->info->bval = rhs;
-                            }
+                symtab_insert(st, n->info);
+                if (n->right) {
+                    interpreter(n->right, st);
+                    if (n->left && n->left->type == NODE_ID) {
+                        if (n->left->info->eval_type == TYPE_INT) {
+                            int rhs = n->right->info->ival;
+                            n->left->info->ival = rhs;
+                            n->info->ival = rhs;
+                            symtab_set_value(st, n->left->info->name, n->left->info->ival);
+                        } else if (n->left->info->eval_type == TYPE_BOOL) {
+                            int rhs = n->right->info->bval;
+                            n->left->info->bval = rhs;
+                            n->info->bval = rhs;
+                            symtab_set_value(st, n->left->info->name, n->left->info->bval);
                         }
-                        // return rhs;
                     }
+                    // return rhs;
                 }
             }
             break;
           }
 
             case NODE_RETURN: {
-              int lhs = interpreter(n->left, st);
-              printf("return: %d\n", lhs);
-              return lhs;
+              interpreter(n->left, st);
+              int lhs = n->left->info->ival;
+              if (n->left->info->eval_type == TYPE_BOOL) {
+                  char* boolean_value = (n->left->info->bval ? "true" : "false");
+                  printf("return: %s\n", boolean_value);
+              } else {
+                printf("return: %d\n", lhs);
+              }
               break;
             }
 
           case NODE_FUNCTION: {
-              return 10;
+                interpreter(n->left, st);
+                // interpreter(n->right, st);
               break;
             }
         default:
@@ -143,6 +158,4 @@ int interpreter(AST* n, SymTab *st) {
     }
 
     if (n->next) interpreter(n->next, st);
-
-    return 50;
 }
