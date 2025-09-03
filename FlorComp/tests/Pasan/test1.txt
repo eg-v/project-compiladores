@@ -1,4 +1,0 @@
-// Programa mínimo que solo define la función main y retorna un valor.
-int main() {
-    return 0;
-}

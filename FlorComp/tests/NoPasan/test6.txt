@@ -1,8 +1,0 @@
-// La función debe retornar un booleano, no un entero.
-bool esValido() {
-    return 123; // Error: el tipo de retorno no coincide con la firma.
-}
-
-int main() {
-    return 0;
-}

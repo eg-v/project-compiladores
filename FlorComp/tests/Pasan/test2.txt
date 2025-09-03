@@ -1,8 +1,0 @@
-// Usa una variable global y una local para calcular un resultado.
-int factor = 10;
-
-int main() {
-    int base = 5;
-    base = base * factor; // Usa tanto la local como la global.
-    return base;
-}
