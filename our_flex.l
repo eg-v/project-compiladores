@@ -7,6 +7,9 @@
 #include "calc-sintaxis.tab.h"
 
 extern AST *root;
+void interpreter(AST* n, SymTab *st);
+TypeInfo check_types(AST* n, SymTab *st);
+void codegen(AST *n, SymTab *st);
 %}
 
 %option noyywrap
