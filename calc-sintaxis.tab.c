@@ -520,9 +520,9 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    38,    38,    39,    52,    53,    54,    55,    59,    73,
-      82,    86,   100,   101,   102,   103,   104,   105,   106,   107,
-     108,   112,   113
+       0,    38,    38,    39,    54,    55,    56,    57,    61,    75,
+      84,    88,   102,   103,   104,   105,   106,   107,   108,   109,
+     110,   114,   115
 };
 #endif
 
@@ -1114,51 +1114,53 @@ yyreduce:
     {
   case 2: /* prog: %empty  */
 #line 38 "calc-sintaxis.y"
-                                { (yyval.ast) = NULL; root = NULL; }
+      { (yyval.ast) = NULL; root = NULL; }
 #line 1119 "calc-sintaxis.tab.c"
     break;
 
   case 3: /* prog: prog stmt  */
 #line 39 "calc-sintaxis.y"
-                                { 
-                                 if ((yyvsp[-1].ast) == NULL) (yyval.ast) = (yyvsp[0].ast);
-                                 else {
-                                     AST *p = (yyvsp[-1].ast);
-                                     while (p->next) p = p->next;
-                                     p->next = (yyvsp[0].ast);
-                                     root = (yyvsp[-1].ast);
-                                     (yyval.ast) = (yyvsp[-1].ast);
-                                 }
-                              }
-#line 1134 "calc-sintaxis.tab.c"
+                {
+        if ((yyvsp[-1].ast) == NULL) {
+            (yyval.ast) = (yyvsp[0].ast);
+            root = (yyvsp[0].ast);
+        } else {
+            AST *p = (yyvsp[-1].ast);
+            while (p->next) p = p->next;
+            p->next = (yyvsp[0].ast);
+            (yyval.ast) = (yyvsp[-1].ast);
+            root = (yyvsp[-1].ast);
+        }
+    }
+#line 1136 "calc-sintaxis.tab.c"
     break;
 
   case 4: /* stmt: expr ';'  */
-#line 52 "calc-sintaxis.y"
+#line 54 "calc-sintaxis.y"
                                 { (yyval.ast) = (yyvsp[-1].ast); }
-#line 1140 "calc-sintaxis.tab.c"
+#line 1142 "calc-sintaxis.tab.c"
     break;
 
   case 5: /* stmt: decl ';'  */
-#line 53 "calc-sintaxis.y"
+#line 55 "calc-sintaxis.y"
                                 { (yyval.ast) = (yyvsp[-1].ast); }
-#line 1146 "calc-sintaxis.tab.c"
+#line 1148 "calc-sintaxis.tab.c"
     break;
 
   case 6: /* stmt: RETURN expr ';'  */
-#line 54 "calc-sintaxis.y"
+#line 56 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_RETURN, NULL, 0, 0, 0, (yyvsp[-1].ast), NULL); }
-#line 1152 "calc-sintaxis.tab.c"
+#line 1154 "calc-sintaxis.tab.c"
     break;
 
   case 7: /* stmt: def_main  */
-#line 55 "calc-sintaxis.y"
+#line 57 "calc-sintaxis.y"
                             { (yyval.ast) = (yyvsp[0].ast); }
-#line 1158 "calc-sintaxis.tab.c"
+#line 1160 "calc-sintaxis.tab.c"
     break;
 
   case 8: /* def_main: TIPO MAIN '(' ')' '{' prog '}'  */
-#line 59 "calc-sintaxis.y"
+#line 61 "calc-sintaxis.y"
                                    {
         TypeInfo t;
         if (strcmp((yyvsp[-6].sval), "int") == 0) t = TYPE_INT;
@@ -1169,11 +1171,11 @@ yyreduce:
         fn->info->eval_type = t;
         (yyval.ast) = fn;
     }
-#line 1173 "calc-sintaxis.tab.c"
+#line 1175 "calc-sintaxis.tab.c"
     break;
 
   case 9: /* decl: TIPO ID  */
-#line 73 "calc-sintaxis.y"
+#line 75 "calc-sintaxis.y"
               {
           TypeInfo t;
           if (strcmp((yyvsp[-1].sval), "int") == 0) t = TYPE_INT;
@@ -1183,20 +1185,20 @@ yyreduce:
           (yyval.ast) = make_node(NODE_DECL, (yyvsp[0].sval), 0, 0, 0, NULL, NULL);
           (yyval.ast)->info->eval_type = t;   /* store declared type */
       }
-#line 1187 "calc-sintaxis.tab.c"
+#line 1189 "calc-sintaxis.tab.c"
     break;
 
   case 10: /* decl: ID '=' expr  */
-#line 82 "calc-sintaxis.y"
+#line 84 "calc-sintaxis.y"
                   {
         AST *id_node = make_node(NODE_ID, (yyvsp[-2].sval), 0, 0, 0, NULL, NULL);
         (yyval.ast) = make_node(NODE_ASSIGN, NULL, 0, 0, 0, id_node, (yyvsp[0].ast));
     }
-#line 1196 "calc-sintaxis.tab.c"
+#line 1198 "calc-sintaxis.tab.c"
     break;
 
   case 11: /* decl: TIPO ID '=' expr  */
-#line 86 "calc-sintaxis.y"
+#line 88 "calc-sintaxis.y"
                        {
         TypeInfo t;
         if (strcmp((yyvsp[-3].sval), "int") == 0) t = TYPE_INT;
@@ -1208,77 +1210,77 @@ yyreduce:
         (yyval.ast) = make_node(NODE_DECL, (yyvsp[-2].sval), 0, 0, 0, id_node, (yyvsp[0].ast));
         (yyval.ast)->info->eval_type =  t;
     }
-#line 1212 "calc-sintaxis.tab.c"
+#line 1214 "calc-sintaxis.tab.c"
     break;
 
   case 12: /* expr: valor  */
-#line 100 "calc-sintaxis.y"
+#line 102 "calc-sintaxis.y"
                                 { (yyval.ast) = (yyvsp[0].ast); }
-#line 1218 "calc-sintaxis.tab.c"
+#line 1220 "calc-sintaxis.tab.c"
     break;
 
   case 13: /* expr: ID  */
-#line 101 "calc-sintaxis.y"
+#line 103 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_ID, (yyvsp[0].sval), 0, 0, 0, NULL, NULL); }
-#line 1224 "calc-sintaxis.tab.c"
+#line 1226 "calc-sintaxis.tab.c"
     break;
 
   case 14: /* expr: expr '+' expr  */
-#line 102 "calc-sintaxis.y"
+#line 104 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, 0, '+', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1230 "calc-sintaxis.tab.c"
+#line 1232 "calc-sintaxis.tab.c"
     break;
 
   case 15: /* expr: expr '*' expr  */
-#line 103 "calc-sintaxis.y"
+#line 105 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, 0, '*', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1236 "calc-sintaxis.tab.c"
+#line 1238 "calc-sintaxis.tab.c"
     break;
 
   case 16: /* expr: expr '-' expr  */
-#line 104 "calc-sintaxis.y"
+#line 106 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, 0, '-', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1242 "calc-sintaxis.tab.c"
+#line 1244 "calc-sintaxis.tab.c"
     break;
 
   case 17: /* expr: '(' expr ')'  */
-#line 105 "calc-sintaxis.y"
+#line 107 "calc-sintaxis.y"
                                 { (yyval.ast) = (yyvsp[-1].ast); }
-#line 1248 "calc-sintaxis.tab.c"
+#line 1250 "calc-sintaxis.tab.c"
     break;
 
   case 18: /* expr: expr OR expr  */
-#line 106 "calc-sintaxis.y"
+#line 108 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, 0, '|', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1254 "calc-sintaxis.tab.c"
+#line 1256 "calc-sintaxis.tab.c"
     break;
 
   case 19: /* expr: expr AND expr  */
-#line 107 "calc-sintaxis.y"
+#line 109 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BINOP, NULL, 0, 0, '&', (yyvsp[-2].ast), (yyvsp[0].ast)); }
-#line 1260 "calc-sintaxis.tab.c"
+#line 1262 "calc-sintaxis.tab.c"
     break;
 
   case 20: /* expr: NOT expr  */
-#line 108 "calc-sintaxis.y"
+#line 110 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_UNOP, NULL, 0, 0, '!', (yyvsp[0].ast), NULL); }
-#line 1266 "calc-sintaxis.tab.c"
+#line 1268 "calc-sintaxis.tab.c"
     break;
 
   case 21: /* valor: INT  */
-#line 112 "calc-sintaxis.y"
+#line 114 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_INT, NULL, (yyvsp[0].ival), 0, 0, NULL, NULL); }
-#line 1272 "calc-sintaxis.tab.c"
+#line 1274 "calc-sintaxis.tab.c"
     break;
 
   case 22: /* valor: BOOL  */
-#line 113 "calc-sintaxis.y"
+#line 115 "calc-sintaxis.y"
                                 { (yyval.ast) = make_node(NODE_BOOL, NULL, 0, (yyvsp[0].ival), 0, NULL, NULL); }
-#line 1278 "calc-sintaxis.tab.c"
+#line 1280 "calc-sintaxis.tab.c"
     break;
 
 
-#line 1282 "calc-sintaxis.tab.c"
+#line 1284 "calc-sintaxis.tab.c"
 
       default: break;
     }
@@ -1471,5 +1473,5 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 116 "calc-sintaxis.y"
+#line 118 "calc-sintaxis.y"
 

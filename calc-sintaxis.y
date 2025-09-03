@@ -35,17 +35,19 @@ int yylex(void);
 %%
  
 prog:
-                                { $$ = NULL; root = NULL; }
-    | prog stmt                 { 
-                                 if ($1 == NULL) $$ = $2;
-                                 else {
-                                     AST *p = $1;
-                                     while (p->next) p = p->next;
-                                     p->next = $2;
-                                     root = $1;
-                                     $$ = $1;
-                                 }
-                              }
+      { $$ = NULL; root = NULL; }
+    | prog stmt {
+        if ($1 == NULL) {
+            $$ = $2;
+            root = $2;
+        } else {
+            AST *p = $1;
+            while (p->next) p = p->next;
+            p->next = $2;
+            $$ = $1;
+            root = $1;
+        }
+    }
     ;
 
 stmt:
