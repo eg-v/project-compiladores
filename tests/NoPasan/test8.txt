@@ -1,5 +1,0 @@
-// Falta un punto y coma al final de la línea 4.
-int main() {
-    int a = 10 // Error: se esperaba un ';'.
-    return a;
-}

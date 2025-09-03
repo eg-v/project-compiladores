@@ -1,5 +1,0 @@
-// El símbolo de dólar no es un token reconocido.
-int main() {
-    int mi_dinero = 100; // Error: carácter '$' no reconocido.
-    return 0;
-}

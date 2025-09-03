@@ -1,6 +1,0 @@
-// test_fail_08_identificador_invalido.txt
-
-int main() {
-  int mi_variable = 10; // Error: '_' no es un carácter válido para un ID.
-  return mi_variable;
-}
