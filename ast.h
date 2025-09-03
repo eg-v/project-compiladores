@@ -11,29 +11,39 @@ typedef enum {
     NODE_ASSIGN,
     NODE_RETURN,
     NODE_FUNCTION,
-    NODE_BLOCK,
     NODE_PROG
 } NodeType;
 
-typedef struct AST {
-    NodeType type;
+typedef enum {
+    TYPE_INT,
+    TYPE_BOOL,
+    TYPE_VOID,
+    TYPE_UNKNOWN,
+    TYPE_ERROR
+} TypeInfo;
+
+typedef struct Info {
     char* name;
     int ival;
-    char* bval;
+    int bval;
+    int initialized;
     char op;
+    TypeInfo eval_type;
+} Info;
+
+typedef struct AST {
+    NodeType type;
+    struct Info *info;
     struct AST *left;
     struct AST *right;
-    struct AST *extra;
     struct AST *next;
 } AST;
 
-AST *new_node(NodeType type, AST *left, AST *right);
-AST *new_int(int val);
-AST *new_bool(char *val);
-AST *new_id(char *name);
-AST *new_binop(char op, AST *l, AST *r);
-AST *new_unop(char op, AST *expr);
+AST *make_node(NodeType type, char *name, int ival, int bval,
+               char op, AST *left, AST *right);
 
 void print_ast(AST *n, int depth, int is_last);
+
+const char* type_to_string(TypeInfo t);
 
 #endif

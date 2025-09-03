@@ -1,0 +1,11 @@
+// Una expresión booleana más elaborada.
+int main() {
+    bool a = true;
+    bool b = false;
+    bool c = true;
+
+    // resultado = (true AND true) OR (false AND !false) -> true OR false -> true
+    bool resultado = (a && c) || (b && !b);
+
+    return 0;
+}

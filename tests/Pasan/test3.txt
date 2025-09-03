@@ -1,0 +1,10 @@
+// Realiza varias operaciones para probar la lógica del chequeo de tipos.
+int main() {
+    int a = 20;
+    int b = 10;
+    bool continuar = true;
+
+    bool resultado = (true || false) && continuar; // (true AND true) -> true
+
+    return 1;
+}
