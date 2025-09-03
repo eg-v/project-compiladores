@@ -30,12 +30,15 @@ TypeInfo check_types(AST* n, SymTab *st) {
                 int found;
                 int value = symtab_get_value(st, n->info->name, &found);
                 if (found) {
+                    // printf("FOUND\n");
                     if (n->info->eval_type == TYPE_INT) {
                         n->info->ival = value;
                     } else if (n->info->eval_type == TYPE_BOOL) {
                         n->info->bval = value;
                     }
-                }
+                }// else {
+                    // printf("NOT FOUND\n");
+                // }
             }
             n->info->eval_type = t;
             result = t;
@@ -72,6 +75,9 @@ TypeInfo check_types(AST* n, SymTab *st) {
         case NODE_ASSIGN: {
             TypeInfo lhs = check_types(n->left, st);
             TypeInfo rhs = check_types(n->right, st);
+            if (lhs == TYPE_ERROR && n->left->type == NODE_ID) {
+                lhs = symtab_lookup(st, n->left->info->name);
+            }
             if (lhs != rhs)
                 fprintf(stderr,"Type error: assignment mismatch\n");
 
@@ -96,11 +102,11 @@ TypeInfo check_types(AST* n, SymTab *st) {
                     symtab_insert(st, n->info);
                     if (n->right) {
                         check_types(n->right, st);
-                        if (n->right->type == NODE_INT || n->right->type == NODE_ID) {
+                        if (n->right->type == NODE_INT) {
                             n->info->ival = n->right->info->ival;
                             symtab_set_value(st, n->info->name, n->info->ival);
                         }
-                        if (n->right->type == NODE_BOOL || n->right->type == NODE_ID) {
+                        if (n->right->type == NODE_BOOL) {
                             n->info->bval = n->right->info->bval;
                             symtab_set_value(st, n->info->name, n->info->bval);
                         }

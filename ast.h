@@ -26,6 +26,7 @@ typedef struct Info {
     char* name;
     int ival;
     int bval;
+    int initialized;
     char op;
     TypeInfo eval_type;
 } Info;

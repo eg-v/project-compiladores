@@ -58,11 +58,11 @@ int symtab_get_value(SymTab *st, const char *name, int *found) {
     for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
         for (Symbol *s = scope->head; s != NULL; s = s->next) {
             if (strcmp(s->info->name, name) == 0) {
-                // if (!s->info->initialized) {
-                //     fprintf(stderr, "Warning: variable '%s' used before initialization\n", name);
-                //     *found = 0;
-                //     return 0;
-                // }
+                if (!s->info->initialized) {
+                    // fprintf(stderr, "Warning: variable '%s' used before initialization\n", name);
+                    *found = 0;
+                    return 0;
+                }
                 *found = 1;
                 if (s->info->eval_type == TYPE_INT) {
                     return s->info->ival;
@@ -83,9 +83,10 @@ void symtab_set_value(SymTab *st, const char *name, int value) {
             if (strcmp(s->info->name, name) == 0) {
                 if (s->info->eval_type == TYPE_INT) {
                     s->info->ival = value;
-                    // s->info->initialized = true;
+                    s->info->initialized = 1;
                 } else if (s->info->eval_type == TYPE_BOOL) {
                     s->info->bval = value;
+                    s->info->initialized = 1;
                 }
                 return;
             }

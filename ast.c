@@ -13,6 +13,7 @@ AST *make_node(NodeType type, char *name, int ival, int bval,
     n->info->bval = bval;
     n->info->op = op;
     n->info->eval_type = TYPE_UNKNOWN;
+    n->info->initialized = 0;
     n->left = left;
     n->right = right;
     n->next = NULL;
