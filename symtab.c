@@ -45,9 +45,9 @@ void symtab_print(SymTab *st) {
     for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
         printf("Scope level %d:\n", scope_level++);
         for (Symbol *s = scope->head; s != NULL; s = s->next) {
-            printf("  Name: %s, Type: %d, value: %d\n", 
+            printf("  Name: %s, Type: %s, value: %d\n", 
                    s->info->name ? s->info->name : "(null)",
-                   s->info->eval_type,
+                   type_to_string(s->info->eval_type),
                    (s->info->eval_type == TYPE_INT) ? s->info->ival : s->info->bval);
         }
     }
