@@ -77,16 +77,16 @@ int symtab_get_value(SymTab *st, const char *name, int *found) {
 }
 
 
-void symtab_set_value(SymTab *st, const char *name, int value) {
+void symtab_set_value(SymTab *st, const char *name, int value, int is_interpreter) {
     for (SymTab *scope = st; scope != NULL; scope = scope->parent) {
         for (Symbol *s = scope->head; s != NULL; s = s->next) {
             if (strcmp(s->info->name, name) == 0) {
                 if (s->info->eval_type == TYPE_INT) {
                     s->info->ival = value;
-                    s->info->initialized = 1;
+                    if (is_interpreter) s->info->initialized = 1;
                 } else if (s->info->eval_type == TYPE_BOOL) {
                     s->info->bval = value;
-                    s->info->initialized = 1;
+                    if (is_interpreter) s->info->initialized = 1;
                 }
                 return;
             }
