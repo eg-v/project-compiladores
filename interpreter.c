@@ -3,6 +3,8 @@
 #include "ast.h"
 #include "symtab.h"
 
+#define IS_INTERPRETER 1
+
 void interpreter(AST* n, SymTab *st) {
     switch (n->type) {
         case NODE_INT:
@@ -100,12 +102,12 @@ void interpreter(AST* n, SymTab *st) {
                     int rhs = n->right->info->ival;
                     n->left->info->ival = rhs;
                     n->info->ival = rhs;
-                    symtab_set_value(st, n->left->info->name, n->left->info->ival);
+                    symtab_set_value(st, n->left->info->name, n->left->info->ival, IS_INTERPRETER);
                 } else if (n->left->info->eval_type == TYPE_BOOL) {
                     int rhs = n->right->info->bval;
                     n->left->info->bval = rhs;
                     n->info->bval = rhs;
-                    symtab_set_value(st, n->left->info->name, n->left->info->bval);
+                    symtab_set_value(st, n->left->info->name, n->left->info->bval, IS_INTERPRETER);
                 }
             }
             // return rhs;
@@ -122,12 +124,12 @@ void interpreter(AST* n, SymTab *st) {
                             int rhs = n->right->info->ival;
                             n->left->info->ival = rhs;
                             n->info->ival = rhs;
-                            symtab_set_value(st, n->left->info->name, n->left->info->ival);
+                            symtab_set_value(st, n->left->info->name, n->left->info->ival, IS_INTERPRETER);
                         } else if (n->left->info->eval_type == TYPE_BOOL) {
                             int rhs = n->right->info->bval;
                             n->left->info->bval = rhs;
                             n->info->bval = rhs;
-                            symtab_set_value(st, n->left->info->name, n->left->info->bval);
+                            symtab_set_value(st, n->left->info->name, n->left->info->bval, IS_INTERPRETER);
                         }
                     }
                     // return rhs;

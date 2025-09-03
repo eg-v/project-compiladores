@@ -4,6 +4,8 @@
 
 TypeInfo type_main;
 
+#define IS_INTERPRETER 0
+
 TypeInfo check_types(AST* n, SymTab *st) {
 
     if (!n) return TYPE_UNKNOWN;
@@ -84,9 +86,9 @@ TypeInfo check_types(AST* n, SymTab *st) {
             // Set the value of the variable if right side is evaluable
             if (n->left && n->left->type == NODE_ID) {
                 if (n->left->info->eval_type == TYPE_INT) {
-                    symtab_set_value(st, n->left->info->name, n->right->info->ival);
+                    symtab_set_value(st, n->left->info->name, n->right->info->ival, IS_INTERPRETER);
                 } else if (n->left->info->eval_type == TYPE_BOOL) {
-                    symtab_set_value(st, n->left->info->name, n->right->info->bval);
+                    symtab_set_value(st, n->left->info->name, n->right->info->bval, IS_INTERPRETER);
                 }
             }
 
@@ -104,11 +106,11 @@ TypeInfo check_types(AST* n, SymTab *st) {
                         check_types(n->right, st);
                         if (n->right->type == NODE_INT) {
                             n->info->ival = n->right->info->ival;
-                            symtab_set_value(st, n->info->name, n->info->ival);
+                            symtab_set_value(st, n->info->name, n->info->ival, IS_INTERPRETER);
                         }
                         if (n->right->type == NODE_BOOL) {
                             n->info->bval = n->right->info->bval;
-                            symtab_set_value(st, n->info->name, n->info->bval);
+                            symtab_set_value(st, n->info->name, n->info->bval, IS_INTERPRETER);
                         }
                     }
                 } else {
