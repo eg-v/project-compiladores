@@ -147,6 +147,7 @@ void interpreter(AST* n, SymTab *st) {
               } else {
                 printf("return: %d\n", lhs);
               }
+              return;
               break;
             }
 
