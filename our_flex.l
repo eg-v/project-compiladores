@@ -24,7 +24,7 @@ tipo    (bool|int|void)
 "return"                   { return RETURN; }
 "||"                       { return OR; }
 "&&"                       { return AND; }
-"~"                        { return NOT; }
+"!"                        { return NOT; }
 {tipo}                     { yylval.sval = strdup(yytext); return TIPO; }
 {letra}({letra}|{digito})* { yylval.sval = strdup(yytext); return ID; }
 [+*\-;()={}]               { return *yytext; }
@@ -55,8 +55,9 @@ int main(int argc,char *argv[]){
         SymTab *st = symtab_new();
         check_types(root, st);
         printf("\n--- Interpreter ---\n");
-        int interp = interpreter(root, st);
-        printf("Interpreter: %d\n", interp);
+        interpreter(root, st);
+        printf("\n--- Assembler ---\n");
+        codegen(root, st);
     }
     return 0;
 }
